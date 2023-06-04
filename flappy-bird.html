@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <title>Flappy Bird Racing!</title>
+        <script src="js/util.js" defer></script>
+        <script src="js/main-loop.js" defer></script>
+        <script src="js/keyboard.js" defer></script>
+        <script src="js/imagens.js" defer></script>
+        <script src="js/balao.js" defer></script>
+        <script src="js/blabla.js" defer></script>
+        <script src="js/level.js" defer></script>
+        <script src="js/mundo.js" defer></script>
+        <script src="js/tartaruga.js" defer></script>
+        <script src="js/passarinho.js" defer></script>
+        <script src="js/gato.js" defer></script>
+        <script src="js/obstaculo.js" defer></script>
+        <script src="js/som.js" defer></script>
+        <script src="js/flappy-bird.js" defer></script>
+        <style>
+            body {
+                text-align: center;
+            }
+            h1, #click-acima, th, #now-playing {
+                margin: 0;
+                font-size: 20px;
+                font-family: "Helvetica";
+            }
+            #flappy-div, #buttons {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+            }
+            #flappy-div canvas {
+                border: 1px solid black;
+                margin: 5px;
+            }
+            button {
+                margin: 3px;
+                font-weight: bold;
+                background-color: silver;
+                text-color: black;
+                border: solid black 1px;
+                border-radius: 5px;
+            }
+            #players button, #levels button {
+                width: 30px;
+            }
+            button.selected {
+                background-color: blue;
+                color: white;
+            }
+            button:disabled {
+                background-color: gray;
+                color: silver;
+            }
+            table {
+                cellspacing: 0;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Flappy Bird Racing!</h1>
+        <div id="now-playing">&nbsp;</div>
+        <div id="div-main">
+            <div id="buttons">
+                <table>
+                    <tr>
+                        <th>Level set:</th>
+                        <td id="level-set"></td>
+                    </tr>
+                    <tr>
+                        <th>Players:</th>
+                        <td id="players"></td>
+                    </tr>
+                    <tr>
+                        <th>Level:</th>
+                        <td id="levels"></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="click-acima"></div>
+            <div id="flappy-div"></div>
+        </div>
+        <div id="div-config">
+            <div>
+                <label for="key-player-1">Key for player 1:</label>
+                <select id="key-player-1">
+                </select>
+            </div>
+        </div>
+    </body>
+</html>
