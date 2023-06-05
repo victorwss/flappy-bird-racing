@@ -12,11 +12,11 @@ Download everything in a folder and run the `flappy-bird-racing.html` into your 
 
 This is a multiplayer racing flappy bird game, although you may also play lonely if you want to, it's quite challenging.
 
-The first player to reach the ending wins!
+The first player to reach the end wins!
 
-However, to reach the end, it will be a long and troublesome path full of hazards and enemies. Everything kills you in
-a single step, so watchout. However, you have infinite lifes, and respawn a few seconds after the death, so you can
-always try again until you do it.
+However, to reach the end, it will be a long and troublesome path full of hazards and enemies. Everything kills you,
+so watch out. However, you have infinite lifes, and respawn a few seconds after the death, so you can always try again
+until you do it.
 
 First, choose if you want the easy mode (5 levels) or the hard mode (13 levels). They gets harder and harder.
 Then, you also select how many players you want to have, from 1 to 6.
@@ -49,11 +49,13 @@ However, it is possible to have issues if not on single-player mode.
 
 The game is a fable about birds that take a long journey to distant lands because... Well, just because!
 
-When you start the game, you'll be flashing in iridescent colors for 5 seconds. During this time, you are unvulnerable.
-This is important to avoid insta-death after respawning when there is a cat or some other hazard that would be
-impassable otherwise.
+When you start the game, you'll be flashing in iridescent colors for 5 seconds. During this time, you are invulnerable.
+This is important to avoid insta-death after respawning when there is a cat in the respawn spot or some other hazard
+that would be impassable otherwise.
 
 The hazards are the ceiling, the floor, the platforms (movable on later levels), the bar charts and the enemies.
+If you touch any of them, you're dead! After some time, your dead body will become transparent and iridescent and
+then will respawn.
 
 There are two enemies:
 
