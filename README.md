@@ -4,7 +4,7 @@ This is a [TINS 2023](https://tins.amarillion.org/2023) entry by [Victor William
 
 ## How to run it?
 
-Download everything in a folder and run the `flapp-bird.html` into your browser.
+Download everything in a folder and run the `flapp-bird-racing.html` into your browser.
 
 ## How is the game?
 
