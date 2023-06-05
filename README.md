@@ -1,10 +1,12 @@
 # Flappy bird racing
 
+![Screenshot](https://github.com/victorwss/flappy-bird-racing/blob/main/screenshot.png?raw=true)
+
 This is a [TINS 2023](https://tins.amarillion.org/2023) entry by [Victor Williams Stafusa da Silva](https://github.com/victorwss).
 
 ## How to run it?
 
-Download everything in a folder and run the `flapp-bird-racing.html` into your browser.
+Download everything in a folder and run the `flappy-bird-racing.html` into your browser.
 
 ## How is the game?
 
@@ -21,8 +23,8 @@ Then, you also select how many players you want to have, from 1 to 6.
 
 ## The players
 
-Although it might be problematic to fit more than two players in the screen.
-But if you really want to, use your browser zoom-out feature to fit everything.
+It might be problematic to fit more than two players in the screen,
+but if you really want to, you might use your browser zoom-out feature to fit everything.
 
 When you start the game, every bird will randomly pick a color and a language between
 English, Spanish, French, German, Portuguese or Italian.
@@ -34,10 +36,10 @@ English, Spanish, French, German, Portuguese or Italian.
 * Player 5 flaps with the P key.
 * Player 6 flaps with the T key.
 
-Fitting 6 people around a single keyboard is difficult, but by plugging an extra USB keyboard into your computer,
+Fitting 6 people around a single keyboard is difficulty, but by plugging an extra USB keyboard into your computer,
 this becomes easy.
 
-Also, clicking the screens with the mouse makes the corresponding bird flap,
+Also, clicking one of the screens with the mouse makes the corresponding bird flap,
 so one of the players could use the mouse instead.
 
 I didn't checked into touchscreen mobile devices, but it might work as well.
@@ -70,7 +72,7 @@ Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divi
 ## Known issues
 
 - The sounds are likely to fail to load in Safari due to lack of MP3 support.
-Since every other browser does support MP3 and converting it might take a some time and space, I think it is ok.
+Since every other modern browser does support MP3 and converting it might take a some time and space, I think it is ok.
 I will do it later if there is demand.
 
 - Not tested in mobile devices.
@@ -79,6 +81,6 @@ I will do it later if there is demand.
 
 - With two or more players, it might be difficulty to tell for sure which bird who is controlling.
 
-- Add music and sound on/off buttons. The music might become annoying after some time.
+- Should add music and sound on/off buttons. The music might become annoying after some time.
 
 - To avoid the control buttons capturing the Enter key, click the blank area in the page before playing.
