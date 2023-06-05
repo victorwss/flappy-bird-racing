@@ -57,17 +57,18 @@ The hazards are the ceiling, the floor, the platforms (movable on later levels),
 If you touch any of them, you're dead! After some time, your dead body will become transparent and iridescent and
 then will respawn.
 
-There are two enemies:
+There are two enemy types:
 
-* The turtles - They sit quiet if you don't disturb them.
+* **The turtles** - They sit quiet if you don't disturb them.
 If you do disturb them, they will say something nasty and will spin around the screen killing every bird they touch.
 
-* The cats - They like to jump and chase birds!
+* **The cats** - They like to jump and chase birds!
 They will be one of your worst nightmares in this game!
 
 Also, the game changes back and forth between the musics
-"Learn to Fly" from Foo Fighters and "Iridescent" by Linkin' Park.
-However, to avoid RIAA and non-free-content issues, they are just MID versions of the original songs converted to MP3.
+***Learn to Fly*** from ***Foo Fighters*** and ***Iridescent*** by ***Linkin' Park***.
+However, to avoid RIAA and non-free-content issues (as suggested by Amarillion during the competition),
+they are just MID versions of the original songs converted to MP3.
 
 Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divirta-se bastante! Divertiti molto!
 
@@ -85,7 +86,8 @@ I will do it later if there is demand.
 
 - Excessive memory and CPU usage.
 
-- With two or more players, it might be difficulty to tell for sure which bird who is controlling.
+- <strike>With two or more players, it might be difficulty to tell for sure which bird who is controlling.</strike>
+[**Fixed.**](https://github.com/victorwss/flappy-bird-racing/commit/b7d8577ae6539c04fd13dd106e6b3f9cbb516b7a)
 
 - Should add music and sound on/off buttons. The music might become annoying after some time.
 
