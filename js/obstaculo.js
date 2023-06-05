@@ -231,9 +231,6 @@ class Chao extends Obstaculo {
                     0, 0, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao,
                     0, this.mundo.alturaChao, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao
             );
-            /*ctx.fillStyle = "green";
-            ctx.strokeStyle = "green";
-            ctx.fillRect(0, this.mundo.alturaChao, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao);*/
         } finally {
             ctx.restore();
         }
@@ -258,9 +255,6 @@ class Teto extends Obstaculo {
                     0, 0, this.mundo.largura, this.mundo.alturaTeto, 0, 0,
                     this.mundo.largura, this.mundo.alturaTeto
             );
-            /*ctx.fillStyle = "yellow";
-            ctx.strokeStyle = "yellow";
-            ctx.fillRect(0, 0, this.mundo.largura, this.mundo.alturaTeto);*/
         } finally {
             ctx.restore();
         }

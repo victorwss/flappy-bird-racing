@@ -2,7 +2,6 @@
 
 const FASE_INICIAL = 1;
 const FASES_ABERTAS = 13;
-const SOM = "mp3";
 const VELOCIDADE_ANIMACAO = 10;
 const MAX_LEVEL = 13;
 const MIN_PLAYERS = 1;
@@ -120,6 +119,7 @@ class FlappyBird {
             const txt = `<button type="button" ${levelSet.levels[i - 1].open ? "" : 'disabled="disabled"'} id="recomecar-${i}" onclick="flappy.fase = ${i};">${i}</button>`;
             levels.innerHTML += txt;
         }
+
         this.recomecar(name, this.#players, 0);
     }
 

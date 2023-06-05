@@ -1,5 +1,7 @@
 "use strict";
 
+const SOM = "mp3";
+
 class Som {
     #levelSet;
     #musica;
@@ -39,8 +41,7 @@ class Som {
         fase.openMe();
         document.getElementById("recomecar-" + fase.numero).removeAttribute("disabled");
         await a.play().catch(Som.#handler(a.src));
-        if (fase.ultima) await this.#playMusic("voarvoar", async () => {});
-        if (fase === spec.mundo.faseInicial) await this.#voarvoar();
+        if (fase.ultima || fase === spec.mundo.faseInicial) await this.#voarvoar();
     }
 
     async #playMusic(name, next) {

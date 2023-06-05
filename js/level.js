@@ -163,13 +163,17 @@ const GAME = (() => {
     const testSet = new LevelSet(test);
     const easySet = new LevelSet(easy);
     const hardSet = new LevelSet(hard);
-    testSet.openAll();
-    easySet.openAll();
-    hardSet.openAll();
 
     return Object.freeze({
-        "Test stuff": testSet,
+        //"Test stuff": testSet,
         "Easy": easySet,
         "Hard": hardSet
     });
 })();
+
+function cheat() {
+    for (const k in GAME) {
+        GAME[k].openAll();
+    }
+    [...document.querySelectorAll("button")].forEach(b => b.removeAttribute("disabled"));
+}

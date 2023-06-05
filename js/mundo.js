@@ -225,24 +225,25 @@ class Mundo {
             this.#specs.items.filter(s => s.passarinho.spec !== spec).forEach(s => s.passarinho.desenhar(spec, ctx));
             this.#specs.items.filter(s => s.passarinho.spec === spec).forEach(s => s.passarinho.desenhar(spec, ctx));
 
-            ctx.fillStyle = "white";
+            const t = spec.lingua.fase(spec.fase.numero);
+            const tw1 = ctx.measureText(t);
+            ctx.fillStyle = spec.fase.claro;
             ctx.strokeStyle = "black";
             ctx.beginPath();
-            ctx.roundRect((this.largura - 100) / 2, this.altura - 40, 100, 30, 10);
+            ctx.roundRect((this.largura - tw1.width - 20) / 2, this.altura - 42, tw1.width + 20, 34, 10);
             ctx.fill();
             ctx.stroke();
 
             ctx.fillStyle = "black";
             ctx.font = "30px serif";
             ctx.textAlign = "center";
-            const t = spec.lingua.fase(spec.fase.numero);
             ctx.fillText(t, this.largura / 2, this.altura - 15);
 
-            const tw = ctx.measureText(spec.keyNameIntl);
-            ctx.fillStyle = "white";
+            const tw2 = ctx.measureText(spec.keyNameIntl);
+            ctx.fillStyle = spec.fase.claro;
             ctx.strokeStyle = "black";
             ctx.beginPath();
-            ctx.roundRect((this.largura - tw.width - 20) / 2, 10, tw.width + 20, 30, 10);
+            ctx.roundRect((this.largura - tw2.width - 20) / 2, 8, tw2.width + 20, 34, 10);
             ctx.fill();
             ctx.stroke();
 

@@ -73,10 +73,12 @@ Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divi
 Since every other browser does support MP3 and converting it might take a some time and space, I think it is ok.
 I will do it later if there is demand.
 
-- Test in mobile devices.
-
-- Still incomplete.
+- Not tested in mobile devices.
 
 - Excessive memory and CPU usage.
 
 - With two or more players, it might be difficulty to tell for sure which bird who is controlling.
+
+- Add music and sound on/off buttons. The music might become annoying after some time.
+
+- To avoid the control buttons capturing the Enter key, click the blank area in the page before playing.
