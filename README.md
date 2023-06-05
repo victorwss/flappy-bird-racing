@@ -15,7 +15,7 @@ This is a multiplayer racing flappy bird game, although you may also play lonely
 The first player to reach the end wins!
 
 However, to reach the end, it will be a long and troublesome path full of hazards and enemies. Everything kills you,
-so watch out. However, you have infinite lifes, and respawn a few seconds after the death, so you can always try again
+so watch out. But, you have infinite lifes, and will respawn a few seconds after the death, so you can always try again
 until you do it.
 
 First, choose if you want the easy mode (5 levels) or the hard mode (13 levels). They gets harder and harder.
@@ -70,6 +70,10 @@ Also, the game changes back and forth between the musics
 However, to avoid RIAA and non-free-content issues, they are just MID versions of the original songs converted to MP3.
 
 Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divirta-se bastante! Divertiti molto!
+
+## Tips
+
+Type "cheat()" in the browser console to unlock all the levels.
 
 ## Known issues
 
