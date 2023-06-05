@@ -183,8 +183,8 @@ class Passarinho extends GameObject {
         }
     }
 
-    #iridescente(ctx) {
-        if (this.#quentura) return radial(ctx, this.#quentura % 1, this.raio);
+    #iridescente(spec, ctx) {
+        if (this.#quentura && spec === this.spec) return radial(ctx, this.#quentura % 1, this.raio);
         if (this.vivo || this.#tempoMorte >= 10) return null;
         return radial(ctx, this.#tempoMorte / 10, this.raio * 3);
     }
@@ -192,7 +192,7 @@ class Passarinho extends GameObject {
     desenhar(spec, ctx) {
         const px = this.x - spec.offX;
         const py = this.y - spec.offY;
-        const iris = this.#iridescente(ctx);
+        const iris = this.#iridescente(spec, ctx);
 
         const desenharCauda = () => {
             ctx.lineWidth = 2;
