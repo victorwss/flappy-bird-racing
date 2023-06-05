@@ -3,10 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>Flappy Bird Racing!</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
-        
         <script src="js/util.js" defer></script>
         <script src="js/main-loop.js" defer></script>
         <script src="js/keyboard.js" defer></script>
@@ -25,13 +21,22 @@
         <script src="js/flappy-bird.js" defer></script>
         <style>
             @font-face {
+                font-family: "Pinyon";
+                src: url(./fonts/Pinyon_Script/PinyonScript-Regular.ttf) format("truetype");
+            }
+            @font-face {
                 font-family: "Custom";
                 src: url(./fonts/Parisienne/Parisienne-Regular.ttf) format("truetype");
             }
             body {
                 text-align: center;
             }
-            h1, #click-acima, th, #now-playing {
+            h1 {
+                margin: 0;
+                font-size: 60px;
+                font-family: "Pinyon";
+            }
+            #click-acima, th, #now-playing {
                 margin: 0;
                 font-size: 20px;
                 font-family: "Helvetica";

@@ -48,6 +48,7 @@ class Mundo {
     #specs;
     #xmax;
     #levelSet;
+    #faseInicial;
 
     constructor(specs, fase, fundos) {
         this.#chao = new Chao(this);
@@ -55,6 +56,7 @@ class Mundo {
         this.#fundos = fundos;
         this.#specs = specs;
         this.#levelSet = fase.levelSet;
+        this.#faseInicial = fase;
 
         const fasesSuperadas = fase.numero - 1;
         this.#pares = [];
@@ -125,6 +127,8 @@ class Mundo {
     }
 
     get levelSet     () { return this.#levelSet                         ; }
+    get faseInicial  () { return this.#faseInicial                      ; }
+    get fundos       () { return this.#fundos                           ; }
     get specs        () { return this.#specs                            ; }
     get alturaChao   () { return ALTURA_CHAO                            ; }
     get alturaTeto   () { return ALTURA_TETO                            ; }
@@ -144,21 +148,24 @@ class Mundo {
     }
 
     #desenharFundo(spec, ctx) {
-        const fundo = this.#fundos.imagem("img/" + spec.fase.bg);
-        const fundoVelho = spec.fase.numero === 1 ? null : this.#fundos.imagem("img/" + spec.fase.anterior.bg);
+        try {
+            ctx.save();
+            const fundo = this.fundos.imagem("img/" + spec.fase.bg);
+            const fundoVelho = spec.fase.numero === 1 ? null : this.fundos.imagem("img/" + spec.fase.anterior.bg);
 
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, this.largura, this.altura);
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, this.largura, this.altura);
 
-        ctx.globalAlpha = spec.transicao;
-        ctx.drawImage(fundo, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
+            ctx.globalAlpha = spec.transicao;
+            ctx.drawImage(fundo, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
 
-        if (fundoVelho && spec.transicao < 1) {
-            ctx.globalAlpha = 1 - spec.transicao;
-            ctx.drawImage(fundoVelho, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
+            if (fundoVelho && spec.transicao < 1) {
+                ctx.globalAlpha = 1 - spec.transicao;
+                ctx.drawImage(fundoVelho, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
+            }
+        } finally {
+            ctx.restore();
         }
-
-        ctx.globalAlpha = 1.0;
     }
 
     #desenharSplash(spec, ctx) {
@@ -175,7 +182,7 @@ class Mundo {
             const frase = spec.fase.numero === 1 ? spec.eraUmaVez : spec.finalFeliz;
             const partes = frase.split("\n");
             for (let m = 100; m > 10; m--) {
-                ctx.font = m + "px 'Pinyon'";
+                ctx.font = m + "px 'Custom'";
                 const tamanho = partes.map(p => ctx.measureText(p).width).reduce((a, b) => Math.max(a, b), 0);
                 if (tamanho < this.largura - 70) break;
             }
@@ -217,14 +224,31 @@ class Mundo {
             }
             this.#specs.items.filter(s => s.passarinho.spec !== spec).forEach(s => s.passarinho.desenhar(spec, ctx));
             this.#specs.items.filter(s => s.passarinho.spec === spec).forEach(s => s.passarinho.desenhar(spec, ctx));
+
             ctx.fillStyle = "white";
+            ctx.strokeStyle = "black";
+            ctx.beginPath();
+            ctx.roundRect((this.largura - 100) / 2, this.altura - 40, 100, 30, 10);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = "black";
             ctx.font = "30px serif";
             ctx.textAlign = "center";
             const t = spec.lingua.fase(spec.fase.numero);
             ctx.fillText(t, this.largura / 2, this.altura - 15);
+
+            const tw = ctx.measureText(spec.keyNameIntl);
+            ctx.fillStyle = "white";
+            ctx.strokeStyle = "black";
+            ctx.beginPath();
+            ctx.roundRect((this.largura - tw.width - 20) / 2, 10, tw.width + 20, 30, 10);
+            ctx.fill();
+            ctx.stroke();
+
             ctx.fillStyle = "black";
-            ctx.textAlign = "left";
-            ctx.fillText(spec.keyNameIntl, 5, 33);
+            ctx.textAlign = "center";
+            ctx.fillText(spec.keyNameIntl, this.largura / 2, 33);
             this.#desenharSplash(spec, ctx);
         } finally {
             ctx.restore();

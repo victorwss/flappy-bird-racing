@@ -78,6 +78,8 @@ class FlappyBird {
                 srcImagens.push(`img/fase${i}.png`);
             }
             srcImagens.push(`img/fim.png`);
+            srcImagens.push(`img/grama.png`);
+            srcImagens.push(`img/pedras.png`);
             const fundos = new BibliotecaImagens(srcImagens);
             await fundos.aguardarImagens();
 

@@ -225,9 +225,15 @@ class Chao extends Obstaculo {
     desenhar(spec, ctx) {
         ctx.save();
         try {
-            ctx.fillStyle = "green";
+            const img = this.mundo.fundos.imagem("img/grama.png");
+            ctx.drawImage(
+                    img,
+                    0, 0, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao,
+                    0, this.mundo.alturaChao, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao
+            );
+            /*ctx.fillStyle = "green";
             ctx.strokeStyle = "green";
-            ctx.fillRect(0, this.mundo.alturaChao, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao);
+            ctx.fillRect(0, this.mundo.alturaChao, this.mundo.largura, this.mundo.altura - this.mundo.alturaChao);*/
         } finally {
             ctx.restore();
         }
@@ -246,9 +252,15 @@ class Teto extends Obstaculo {
     desenhar(spec, ctx) {
         ctx.save();
         try {
-            ctx.fillStyle = "yellow";
+            const img = this.mundo.fundos.imagem("img/pedras.png");
+            ctx.drawImage(
+                    img,
+                    0, 0, this.mundo.largura, this.mundo.alturaTeto, 0, 0,
+                    this.mundo.largura, this.mundo.alturaTeto
+            );
+            /*ctx.fillStyle = "yellow";
             ctx.strokeStyle = "yellow";
-            ctx.fillRect(0, 0, this.mundo.largura, this.mundo.alturaTeto);
+            ctx.fillRect(0, 0, this.mundo.largura, this.mundo.alturaTeto);*/
         } finally {
             ctx.restore();
         }

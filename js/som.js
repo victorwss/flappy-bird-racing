@@ -40,7 +40,7 @@ class Som {
         document.getElementById("recomecar-" + fase.numero).removeAttribute("disabled");
         await a.play().catch(Som.#handler(a.src));
         if (fase.ultima) await this.#playMusic("voarvoar", async () => {});
-        if (fase.numero === 1) await this.#voarvoar();
+        if (fase === spec.mundo.faseInicial) await this.#voarvoar();
     }
 
     async #playMusic(name, next) {
