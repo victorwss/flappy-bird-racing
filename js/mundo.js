@@ -2,8 +2,6 @@
 
 const [ALTURA_TOTAL, LARGURA_TOTAL] = [500, 750];
 const [ALTURA_CHAO, ALTURA_TETO] = [ALTURA_TOTAL - 50, 50];
-const SUAVIZACAO_TRANSPARENCIA = 1 / 256;
-const X_PASSARINHO = 100;
 
 class GameObject {
     #mundo;
@@ -12,20 +10,25 @@ class GameObject {
         this.#mundo = mundo;
     }
 
-    get mundo () { return this.#mundo      ; }
-    get lingua() { return this.mundo.lingua; }
-    get x1    () { throw new Error() ; }
-    get y1    () { throw new Error() ; }
-    get x2    () { throw new Error() ; }
-    get y2    () { throw new Error() ; }
-    get xp1   () { return this.x1 - this.mundo.offX; }
-    get yp1   () { return this.y1 - this.mundo.offY; }
-    get xp2   () { return this.x2 - this.mundo.offX; }
-    get yp2   () { return this.y2 - this.mundo.offY; }
-    get w     () { return this.x2 - this.x1; }
-    get h     () { return this.y2 - this.y1; }
+    get mundo() { return this.#mundo      ; }
+    get x1   () { throw new Error()       ; }
+    get y1   () { throw new Error()       ; }
+    get x2   () { throw new Error()       ; }
+    get y2   () { throw new Error()       ; }
+    get w    () { return this.x2 - this.x1; }
+    get h    () { return this.y2 - this.y1; }
 
-    get enquadrado() { return this.xp2 >= 0 && this.xp1 < this.mundo.largura && this.yp1 >= 0 && this.yp2 < this.mundo.altura; }
+    xp1(spec) { return this.x1 - spec.offX; }
+    yp1(spec) { return this.y1 - spec.offY; }
+    xp2(spec) { return this.x2 - spec.offX; }
+    yp2(spec) { return this.y2 - spec.offY; }
+
+    enquadrado(spec) {
+        return this.xp2(spec) >= 0
+            && this.xp1(spec) < this.mundo.largura
+            && this.yp1(spec) >= 0
+            && this.yp2(spec) < this.mundo.altura;
+    }
 
     tick(deltaT)  { throw new Error(); }
     desenhar(ctx) { throw new Error(); }
@@ -33,38 +36,24 @@ class GameObject {
 
 class Mundo {
 
-    #callbacks;
-    #passarinho;
     #pares;
     #obstaculos;
     #irritantes;
     #chao;
     #teto;
-    #acumulado;
-    #fase;
-    #transicaoFase;
     #fundos;
-    #lingua;
-    #nomeTecla;
+    #specs;
     #xmax;
     #levelSet;
 
-    constructor(lingua, fase, fundos, callbacks, nomeTecla, cor, corOlho) {
-        this.#callbacks = callbacks;
+    constructor(specs, fase, fundos) {
         this.#chao = new Chao(this);
         this.#teto = new Teto(this);
-        this.#transicaoFase = 1;
         this.#fundos = fundos;
-        this.#lingua = lingua;
+        this.#specs = specs;
         this.#levelSet = fase.levelSet;
-        this.#nomeTecla = nomeTecla;
-        this.#fase = fase;
 
         const fasesSuperadas = fase.numero - 1;
-        this.#acumulado = 0;
-        for (let i = 0; i < fasesSuperadas; i++) {
-            this.#acumulado += this.levelSet.levels[i].numeroObstaculos;
-        }
         this.#pares = [];
         this.#obstaculos = [];
         this.#irritantes = [ this.#chao, this.#teto ];
@@ -124,8 +113,7 @@ class Mundo {
             }
         }
 
-        this.#passarinho = new Passarinho(this.#obstaculos[0], cor, corOlho);
-        this.#callbacks.passouDeFase(this.fase);
+        specs.criarPassarinhos(this.#obstaculos[0]);
     }
 
     destruir(ob) {
@@ -133,15 +121,8 @@ class Mundo {
         if (idx >= 0) this.irritantes.splice(idx, 1);
     }
 
-    get pontos() {
-        return this.#pares.reduce((a, p) => a + (this.#passarinho.x - this.#passarinho.raio > p.x2 ? 1 : 0), 0);
-    }
-
     get levelSet     () { return this.#levelSet                         ; }
-    get lingua       () { return this.#lingua                           ; }
-    get passarinho   () { return this.#passarinho                       ; }
-    get callbacks    () { return this.#callbacks                        ; }
-    get gravidade    () { return this.fase.gravidade                    ; }
+    get specs        () { return this.#specs                            ; }
     get alturaChao   () { return ALTURA_CHAO                            ; }
     get alturaTeto   () { return ALTURA_TETO                            ; }
     get alturaCentro () { return (this.alturaTeto + this.alturaChao) / 2; }
@@ -150,75 +131,52 @@ class Mundo {
     get largura      () { return LARGURA_TOTAL                          ; }
     get obstaculos   () { return this.#obstaculos                       ; }
     get irritantes   () { return this.#irritantes                       ; }
-    get numeroFase   () { return this.fase.numero                       ; }
-    get fase         () { return this.#fase                             ; }
-    get ganhou       () { return this.fase.ultima                       ; }
-    get offX         () { return this.#passarinho.x - X_PASSARINHO      ; }
-    get offY         () { return 0                                      ; }
     get xmax         () { return this.#xmax                             ; }
-    get vx           () { return this.fase.vx                           ; }
-
-    flap() {
-        this.#passarinho.flap();
-    }
+    get pares        () { return this.#pares                            ; }
 
     tick(deltaT) {
-        if (this.#transicaoFase < 1) this.#transicaoFase += SUAVIZACAO_TRANSPARENCIA;
-        this.#pares.forEach(p => p.tick(deltaT));
-        this.#passarinho.tick(deltaT);
+        this.pares.forEach(p => p.tick(deltaT));
+        this.#specs.tick(deltaT);
         this.#irritantes.forEach(p => p.tick(deltaT));
-        const pts = this.pontos;
-        if (this.ganhou) return;
-        if (pts > this.#acumulado) {
-            if (this.#pares[pts].fase.numero > this.numeroFase) {
-                this.#fase = this.#pares[pts].fase;
-                this.#transicaoFase = 0;
-                this.#passarinho.checkpoint = this.#pares[pts];
-                this.#callbacks.passouDeFase(this.fase);
-                this.#passarinho.passouDeFase(this.fase);
-            } else {
-                this.#callbacks.pontuou();
-            }
-        }
-        this.#acumulado = pts;
     }
 
-    #desenharFundo(ctx) {
-        const fundo = this.#fundos.imagem("img/" + this.fase.bg);
-        const fundoVelho = this.numeroFase === 1 ? null : this.#fundos.imagem("img/" + this.fase.anterior.bg);
+    #desenharFundo(spec, ctx) {
+        const fundo = this.#fundos.imagem("img/" + spec.fase.bg);
+        const fundoVelho = spec.fase.numero === 1 ? null : this.#fundos.imagem("img/" + spec.fase.anterior.bg);
 
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, this.largura, this.altura);
 
-        ctx.globalAlpha = this.#transicaoFase;
+        ctx.globalAlpha = spec.transicao;
         ctx.drawImage(fundo, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
 
-        if (fundoVelho) {
-            ctx.globalAlpha = 1 - this.#transicaoFase;
+        if (fundoVelho && spec.transicao < 1) {
+            ctx.globalAlpha = 1 - spec.transicao;
             ctx.drawImage(fundoVelho, 0, this.alturaTeto, this.largura, this.alturaChao - this.alturaTeto);
         }
 
         ctx.globalAlpha = 1.0;
     }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
         ctx.save();
         try {
-            this.#desenharFundo(ctx);
-            this.#irritantes.filter(ob => ob.camada === -1 /*&& ob.enquadrado*/).forEach(ob => ob.desenhar(ctx));
-            this.#pares.filter(ob => ob.enquadrado).forEach(p => p.desenhar(ctx));
+            this.#desenharFundo(spec, ctx);
+            this.#irritantes.filter(ob => ob.camada === -1 /*&& ob.enquadrado*/).forEach(ob => ob.desenhar(spec, ctx));
+            this.#pares.filter(ob => ob.enquadrado).forEach(p => p.desenhar(spec, ctx));
             for (let c = 0; c <= 2; c++) {
-                this.#irritantes.filter(ob => ob.camada === c /*&& ob.enquadrado*/).forEach(ob => ob.desenhar(ctx));
+                this.#irritantes.filter(ob => ob.camada === c /*&& ob.enquadrado*/).forEach(ob => ob.desenhar(spec, ctx));
             }
-            this.#passarinho.desenhar(ctx);
+            this.#specs.items.filter(s => s.passarinho.spec !== spec).forEach(s => s.passarinho.desenhar(spec, ctx));
+            this.#specs.items.filter(s => s.passarinho.spec === spec).forEach(s => s.passarinho.desenhar(spec, ctx));
             ctx.fillStyle = "white";
             ctx.font = "30px serif";
             ctx.textAlign = "center";
-            const t = this.lingua.fase(this.fase.numero);
+            const t = spec.lingua.fase(spec.fase.numero);
             ctx.fillText(t, this.largura / 2, this.altura - 15);
             ctx.fillStyle = "black";
             ctx.textAlign = "left";
-            ctx.fillText(this.lingua.tecla(this.#nomeTecla), 5, 33);
+            ctx.fillText(spec.keyNameIntl, 5, 33);
         } finally {
             ctx.restore();
         }

@@ -2,43 +2,34 @@
 
 const FASE_INICIAL = 1;
 const FASES_ABERTAS = 13;
-const TECLAS = ["Space", "Enter", "Numpad5", "KeyQ", "KeyP", "KeyT"];
-const MIN_PLAYERS = 2;
-const MAX_PLAYERS = TECLAS.length;
 const SOM = "mp3";
 const VELOCIDADE_ANIMACAO = 10;
 const MAX_LEVEL = 13;
+const MIN_PLAYERS = 1;
+const MAX_PLAYERS = 6;
 
 class MundoController {
-    #lingua;
-    #canvas;
+    #specs;
+    #canvases;
     #mundo;
     #fundos;
-    #sons;
-    #teclaPular;
-    #cor;
-    #corOlho;
 
-    constructor(lingua, fase, calls, numero, teclaPular, cor, corOlho) {
-        this.#sons = calls.som.de(numero);
+    constructor(players, fase, calls) {
         this.#fundos = calls.fundos;
-        this.#teclaPular = teclaPular;
-        this.#lingua = lingua;
-        this.#cor = cor;
-        this.#corOlho = corOlho;
+        this.#specs = new SpecSet(players, calls.som);
 
-        const canvas = document.createElement("canvas");
-        this.#canvas = canvas;
-        calls.holder.appendChild(canvas);
+        for (const spec of this.#specs.items) {
+            calls.holder.appendChild(spec.canvas);
 
-        canvas.addEventListener("click", event => {
-            if (event.defaultPrevented) return;
-            this.#mundo.flap();
-            event.preventDefault();
-        }, {capture: true});
+            spec.canvas.addEventListener("click", event => {
+                if (event.defaultPrevented) return;
+                spec.flap();
+                event.preventDefault();
+            }, {capture: true});
 
-        const key = Keyboard.keys[teclaPular];
-        Keyboard.onPress(key, event => this.#mundo.flap()/*, {capture: true}*/);
+            const key = Keyboard.keys[spec.keyName];
+            Keyboard.onPress(key, event => spec.flap()/*, {capture: true}*/);
+        }
 
         this.recomecar(fase);
     }
@@ -48,14 +39,14 @@ class MundoController {
     }
 
     desenhar() {
-        const ctx = this.#canvas.getContext("2d", { alpha: false });
-        this.#mundo.desenhar(ctx);
+        for (const spec of this.#specs.items) {
+            const ctx = spec.canvas.getContext("2d", { alpha: false });
+            this.#mundo.desenhar(spec, ctx);
+        }
     }
 
     recomecar(fase) {
-        this.#mundo = new Mundo(this.#lingua, fase, this.#fundos, this.#sons, this.#teclaPular, this.#cor, this.#corOlho);
-        this.#canvas.height = this.#mundo.altura;
-        this.#canvas.width = this.#mundo.largura;
+        this.#mundo = new Mundo(this.#specs, fase, this.#fundos);
     }
 
     get ganhou() {
@@ -65,7 +56,7 @@ class MundoController {
 
 class FlappyBird {
 
-    #mundos;
+    #mundo;
     #calls;
     #game;
     #setEscolhido;
@@ -79,7 +70,7 @@ class FlappyBird {
         this.#faseEscolhida = 0;
 
         const holder = document.getElementById(canvasHolder);
-        this.#mundos = [];
+        this.#mundo = null;
 
         window.onload = async () => {
             const srcImagens = [];
@@ -141,7 +132,7 @@ class FlappyBird {
     #limpar() {
         this.#calls.som.silenciar();
         this.#calls.holder.innerHTML = "";
-        this.#mundos = [];
+        this.#mundo = null;
     }
 
     #ficarAzul() {
@@ -178,33 +169,16 @@ class FlappyBird {
 
     #comecarJogo() {
         this.#limpar();
-
-        const langs = Object.values(LINGUAS);
-        const colors = ["rgb(255,255,64)", "rgb(255,128,128)", "rgb(128,128,255)", "rgb(128,255,128)", "rgb(224,224,224)", "rgb(48,48,48)"];
-        const eyes = ["cyan", "lime", "black", "red", "rgb(128,64,0)", "rgb(128,192,64)"];
-        langs.shuffle();
-        colors.shuffle();
-        eyes.shuffle();
-        for (let i = 0; i < this.#players; i++) {
-            const mundo = new MundoController(
-                langs[i],
-                this.#game[this.#setEscolhido].levels[this.#faseEscolhida - 1],
-                this.#calls,
-                i,
-                TECLAS[i],
-                colors[i],
-                eyes[i]
-            );
-            this.#mundos.push(mundo);
-        }
+        const fase = this.#game[this.#setEscolhido].levels[this.#faseEscolhida - 1];
+        this.#mundo = new MundoController(this.#players, fase, this.#calls);
     }
 
     #tick() {
-        this.#mundos.forEach(mundo => mundo.tick(VELOCIDADE_ANIMACAO));
+        this.#mundo?.tick(VELOCIDADE_ANIMACAO);
     }
 
     #desenhar() {
-        this.#mundos.forEach(mundo => mundo.desenhar());
+        this.#mundo?.desenhar();
     }
 }
 

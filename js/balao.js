@@ -23,7 +23,6 @@ class Balao {
         if (this.#vida <= 0) return;
         ctx.save();
         try {
-            ctx.translate(0, 0);
             ctx.fillStyle = "white";
             ctx.strokeStyle = "black";
             ctx.font = "20px serif";

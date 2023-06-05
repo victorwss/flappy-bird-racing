@@ -21,37 +21,26 @@ class Som {
         this.#levelSet = levelSet;
     }
 
-    de(i) {
-        const eu = this;
-        return Object.freeze({
-            passouDeFase: async fase => await eu.passouDeFase(i, fase),
-            pontuou     : async ()   => await eu.pontuou(i),
-            bateuAsas   : async ()   => await eu.bateuAsas(i),
-            morreu      : async ()   => await eu.morreu(i),
-            gato        : async ()   => await eu.gato(i)
-        });
-    }
-
-    async pontuou(i) {
+    async pontuou(spec) {
         // TODO...
     }
 
-    async passouDeFase(i, fase) {
-        if (fase.numero === 1) {
-            this.#voarvoar();
-        } else {
-            const chave = this.#chave++;
-            const a = new Audio();
-            this.#sonsTocando["" + chave] = a;
-            a.onended = async () => {
-                delete this.#sonsTocando["" + chave];
-            };
-            a.src = `${SOM}/fase${fase.numero}.${SOM}`;
-            fase.openMe();
-            document.getElementById("recomecar-" + fase.numero).removeAttribute("disabled");
-            await a.play().catch(Som.#handler(a.src));
-            if (fase.ultima) await this.#playMusic("voarvoar", async () => {});
-        }
+    async passouDeFase(spec) {
+        const fase = spec.fase;
+        const chave = this.#chave++;
+        const a = new Audio();
+        this.#sonsTocando["" + chave] = a;
+        a.onended = async () => {
+            delete this.#sonsTocando["" + chave];
+        };
+        a.src = fase.ultima
+                ? `${SOM}/${spec.lingua.tagSom}-fim.${SOM}`
+                : `${SOM}/${spec.lingua.tagSom}-fase${fase.numero}.${SOM}`;
+        fase.openMe();
+        document.getElementById("recomecar-" + fase.numero).removeAttribute("disabled");
+        await a.play().catch(Som.#handler(a.src));
+        if (fase.ultima) await this.#playMusic("voarvoar", async () => {});
+        if (fase.numero === 1) await this.#voarvoar();
     }
 
     async #playMusic(name, next) {
@@ -59,7 +48,7 @@ class Som {
         document.getElementById("now-playing").innerHTML = "&nbsp;";
         const a = new Audio();
         a.src = `${SOM}/${name}.${SOM}`;
-        a.volume = 0.3;
+        a.volume = name === "voarvoar" ? 1.0 : 0.3;
         a.onended = async () => {
             if (this.#musica !== a) return;
             this.#musica = null;
@@ -82,7 +71,7 @@ class Som {
         await this.#playMusic("voarvoar", async () => await ([true, false].randomElement() ? this.#learnToFly() : this.#iridescent()));
     }
 
-    async bateuAsas(i) {
+    async bateuAsas(spec) {
         const chave = this.#chave++;
         const a = new Audio();
         this.#sonsTocando["" + chave] = a;
@@ -93,7 +82,7 @@ class Som {
         await a.play().catch(Som.#handler(a.src));
     }
 
-    async gato(i) {
+    async gato(spec) {
         const chave = this.#chave++;
         const a = new Audio();
         this.#sonsTocando["" + chave] = a;
@@ -104,7 +93,7 @@ class Som {
         await a.play().catch(Som.#handler(a.src));
     }
 
-    async morreu(i) {
+    async morreu(spec) {
         //this.#musica?.pause();
         //document.getElementById("now-playing").innerHTML = "&nbsp;";
         //this.#musica = undefined;

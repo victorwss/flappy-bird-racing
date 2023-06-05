@@ -64,7 +64,7 @@ class Tartaruga extends GameObject {
         }
         if (bateu) {
             this.#va = Math.sqrt(oq.vx ** 2 + oq.vy ** 2) * [1, -1].randomElement() / this.raio;
-            this.#balao = new Balao(10, this.lingua.xingamento);
+            this.#balao = new Balao(10, oq.lingua.xingamento);
         }
         return bateu;
     }
@@ -79,11 +79,16 @@ class Tartaruga extends GameObject {
         this.#porrada -= deltaT / 1000;
 
         const mundo = this.mundo;
+        const minOffx = mundo.specs.items.map(s => s.offX).reduce((a, b) => a === null ? b : Math.min(a, b), null);
+        const maxOffx = mundo.specs.items.map(s => s.offX).reduce((a, b) => a === null ? b : Math.max(a, b), null);
+        const minOffy = mundo.specs.items.map(s => s.offY).reduce((a, b) => a === null ? b : Math.min(a, b), null);
+        const maxOffy = mundo.specs.items.map(s => s.offY).reduce((a, b) => a === null ? b : Math.max(a, b), null);
+
         if (this.#porrada >= 0) {
-            if (this.vy < 0 && this.y < mundo.alturaTeto + mundo.offY + this.raio) this.#vy *= -1;
-            if (this.vy > 0 && this.y > mundo.alturaChao + mundo.offY - this.raio) this.#vy *= -1;
-            if (this.vx < 0 && this.x <                    mundo.offX + this.raio) this.#vx *= -1;
-            if (this.vx > 0 && this.x > mundo.largura    + mundo.offX - this.raio) this.#vx *= -1;
+            if (this.vy < 0 && this.y < mundo.alturaTeto + minOffy + this.raio) this.#vy *= -1;
+            if (this.vy > 0 && this.y > mundo.alturaChao + maxOffy - this.raio) this.#vy *= -1;
+            if (this.vx < 0 && this.x <                    minOffx + this.raio) this.#vx *= -1;
+            if (this.vx > 0 && this.x > mundo.largura    + maxOffx - this.raio) this.#vx *= -1;
         }
         let dx = this.vx * deltaT / 1000;
         let dy = this.vy * deltaT / 1000;
@@ -96,10 +101,10 @@ class Tartaruga extends GameObject {
         if (this.#a < 0) this.#a += 2 * Math.PI;
 
         if (this.#porrada === 0 && (
-                this.y >= mundo.altura + mundo.offY - this.raio ||
-                this.y < mundo.offY - this.raio ||
-                this.x >= mundo.largura + mundo.offX - this.raio ||
-                this.x < mundo.offX - this.raio
+                this.y >= mundo.altura  + maxOffy + this.raio ||
+                this.y <                  minOffy - this.raio ||
+                this.x >= mundo.largura + maxOffx + this.raio ||
+                this.x <                  minOffx - this.raio
         )) {
             this.destruir();
         }
@@ -109,10 +114,10 @@ class Tartaruga extends GameObject {
         this.mundo.destruir(this);
     }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
 
-        const px = this.x - this.mundo.offX;
-        const py = this.y - this.mundo.offY;
+        const px = this.x - spec.offX;
+        const py = this.y - spec.offY;
         const grau = Math.PI / 180;
 
         const desenharCorpo = () => {

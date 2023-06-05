@@ -1,6 +1,9 @@
 "use strict";
 
+const CHART_MESSAGES = 11;
+
 class Lingua {
+    #tagSom;
     #eraUmaVez;
     #mortes;
     #charts;
@@ -12,7 +15,9 @@ class Lingua {
     #teclas;
     #voltei;
 
-    constructor(eraUmaVez, mortes, charts, vitoria, fase, miau, voltei, saudacoes, xingamentos, teclas) {
+    constructor(tagSom, eraUmaVez, mortes, charts, vitoria, fase, miau, voltei, saudacoes, xingamentos, teclas) {
+        if (charts.length !== CHART_MESSAGES) throw new Error();
+        this.#tagSom = tagSom;
         this.#eraUmaVez = Object.freeze(eraUmaVez);
         this.#mortes = Object.freeze(mortes);
         this.#charts = Object.freeze(charts);
@@ -23,6 +28,10 @@ class Lingua {
         this.#saudacoes = Object.freeze(saudacoes);
         this.#xingamentos = Object.freeze(xingamentos);
         this.#teclas = Object.freeze(teclas);
+    }
+
+    get tagSom() {
+        return this.#tagSom;
     }
 
     get eraUmaVez() {
@@ -37,8 +46,13 @@ class Lingua {
         return this.#voltei.randomElement();
     }
 
-    get chart() {
-        return this.#charts.randomElement();
+    chart(i) {
+        if (typeof i !== "number" || i !== i || i < 0 || i >= CHART_MESSAGES) throw new Error(`${i}`);
+        return this.#charts[i];
+    }
+
+    static get randomChartId() {
+        return randomInt(0, CHART_MESSAGES - 1);
     }
 
     get vitoria() {
@@ -68,6 +82,7 @@ class Lingua {
 
 const LINGUAS = {
     en: new Lingua(
+        "en",
         ["Once upon a time,\nthere was a bird", "A long time ago,\nin a galaxy far, far away..."],
         ["💀", "💩", "😡", "Aaaaaa!", "💣🔪💢💥!" , "Argh!" , "Ugh!" , "Fuuuuu...", "NOOOOOO!", "Yikes!"    , "Ouch!"   , "Dang!" , "Dammit!"    , "This sucks!"    , "Oooff!"   , "Hell!"     , "WTF!?"      ],
         ["Yearly sales", "CO2 emissions", "Median salary", "Biodiversity increase", "Ozone layer hole size", "Flappy Bird births", "Horse racing speed", "Flappy Birds yearly deaths", "Pikachu's voltage", "Vulpix vs Charmander fire hazard", "Average flapping wing area"],
@@ -78,6 +93,7 @@ const LINGUAS = {
         {"Space": "Spacebar", "Enter": "Enter key", "Numpad5": "Numpad key 5", "KeyQ": "Key Q", "KeyP": "Key P", "KeyT": "Key T"}
     ),
     pt: new Lingua(
+        "pt",
         ["Era uma vez,\num belo passarinho...", "Há muito tempo atrás,\nem uma galáxia muito, muito distante..."],
         ["💀", "💩", "😡", "Aaaaaa!", "💣🔪💢💥!" , "Argh!" , "Ugh!" , "Fuuuuu...", "NÃÃOOOO!", "Droga!"    , "Puxa!"   , "Ai!"   , "Diacho!"    , "Que saco!"      , "Dãããã!"   , "Inferno!"  , "KCT!"       ],
         ["Vendas anuais", "Emissões de CO2", "Salário mediano", "Aumento de biodiversidade", "Tamanho do buraco na camada de ozônio", "Nascimentos de Flappy Birds", "Velocidade do cavalo de corrida", "Mortes anuais de Flappy Birds", "Voltagem do Pikachu", "Perigo de incêndio de Vulpix vs Charmander", "Área de asa média"],
@@ -88,6 +104,7 @@ const LINGUAS = {
         {"Space": "Barro de espaço", "Enter": "Tecla enter", "Numpad5": "Tecla 5 do teclado numérico", "KeyQ": "Tecla Q", "KeyP": "Tecla P", "KeyT": "Tecla T"}
     ),
     fr: new Lingua(
+        "fr",
         ["Il était une fois\nun magnifique petit oiseau...", "Il y a bien longtemps,\ndans une galaxie lointaine, très lointaine..."],
         ["💀", "💩", "😡", "Aaaaaa !", "💣🔪💢💥 !" , "Argh !" , "Ugh !" , "Fuuuuu...", "NOOONNN !", "Quoi ?!"    , "Ouïe !"   , "Aíe !"  , "Malchance"  , "Quelle douleur !", "Diable !"  , "Enfer !"    , "Je déteste !"],
         ["Chiffre d'affaires annuel", "Emissions de CO2", "Salaire médian", "Augmentation de la biodiversité", "Taille du trou dans la couche d'ozone", "Naissances des Flappy Birds", "Vitesse du cheval de course", "Décès annuels de Flappy Birds", "Tension de Pikachu", "Risque d'incendie de Goupix contre Salamèche", "Surface alaire moyenne"],
@@ -98,6 +115,7 @@ const LINGUAS = {
         {"Space": "Barre d'espace", "Enter": "Touche entrée", "Numpad5": "Touche 5 du pavé numérique", "KeyQ": "Touche Q", "KeyP": "Touche P", "KeyT": "Touche T"}
     ),
     de: new Lingua(
+        "de",
         ["Es war einmal\nein wunderschöner kleiner Vogel...", "Vor langer Zeit,\nin einer weit, weit entfernten Galaxie ..."],
         ["💀", "💩", "😡", "Aaaaaa!", "💣🔪💢💥!" , "Argh!" , "Ugh!" , "Fuuuuu...", "NEEIINN!", "Nanu!"     , "Dort!"   , "Ach!"  , "Pech!"      , "Was zum Teufel!", "Pfui!"    , "Hölle!"    , "Hunf!"      ],
         ["Jahresumsatz", "CO2-Emissionen", "Mittleres Gehalt", "Erhöhte Artenvielfalt", "Größe des Lochs in der Ozonschicht", "Geburten von Flappy Birds", "Rennpferdgeschwindigkeit", "Jährliche Todesfälle von Flappy Birds", "Pikachus Spannung", "Brandgefahr durch Vulpix vs. Glumanda", "Durchschnittliche Flügelfläche"],
@@ -108,6 +126,7 @@ const LINGUAS = {
         {"Space": "Eingabetaste", "Enter": "Leertaste", "Numpad5": "Zifferntaste 5", "KeyQ": "Q-Taste", "KeyP": "P-Taste", "KeyT": "T-Taste"}
     ),
     it: new Lingua(
+        "it",
         ["C'era una volta\nun bellissimo uccellino...", "Tanto tempo fa,\nin una galassia molto, molto lontana..."],
         ["💀", "💩", "😡", "Aaaaaa!", "💣🔪💢💥!" , "Argh!" , "Ugh!" , "Fuuuuu...", "NOOOOOO!", "Mannaggia" , "Caspita!", "Cazzo!", "Dannazione!", "Que diavolo!"   , "Caspita!" , "Inferno!"  , "Che cavolo!"],
         ["Saldi annuali", "Emissioni di CO2", "Stipendio medio", "Aumento della biodiversità", "Dimensioni del buco nello strato di ozono", "Nascite di Flappy Birds", "Velocità del cavallo da corsa", "Uccisioni annuali di Flappy Birds", "Voltaggio di Pikachu", "Rischio di incendio Vulpix vs Charmander", "Superficie alare media"],
@@ -118,6 +137,7 @@ const LINGUAS = {
         {"Space": "Barra spaziatrice", "Enter": "Tasto Invio", "Numpad5": "Tasto 5 del tastierno numerico", "KeyQ": "Tasto Q", "KeyP": "Tasto P", "KeyT": "Tasto T"}
     ),
     es: new Lingua(
+        "es",
         ["Había una vez\nun hermoso pajarito...", "Hace mucho tiempo,\nen una galaxia muy, muy lejana..."],
         ["💀", "💩", "😡", "¡Aaaaa!", "¡💣🔪💢💥!", "¡Argh!", "¡Ugh!", "Fuuuuu...", "¡NOOOOO!", "¡Que odio!", "¡Guau!"  , "¡Ay!"  , "¡Odio eso!" , "¡Qué diablos!"  , "¡Caramba!", "¡Infierno!", "¡Qué rabia!"],
         ["Ventas anuales", "Emisiones de CO2", "Salario medio", "Aumento de la biodiversidad", "Tamaño del agujero en la capa de ozono", "Nacimientos de Flappy Birds", "Velocidade del caballo de carrera", "Muertes anuales de Flappy Birds", "Voltaje de Pikachu", "Peligro de incendio de Vulpix vs Charmander", "Área promedio de ala"],

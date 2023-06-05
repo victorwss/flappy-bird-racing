@@ -63,24 +63,24 @@ class Tubo extends Obstaculo {
 
     get numero   () { return this.#numero    ; }
     get fase     () { return this.#fase      ; }
-    get texto    () { return `${this.numero}`; }
     get posicao  () { throw new Error()      ; }
     get corPlaca () { return this.fase.claro ; }
     get corBarra () { return this.fase.medio ; }
     get corTexto () { return this.fase.escuro; }
     get irritante() { return this.#irritante ; }
 
+    texto(spec) { return `${this.numero}`; }
+
     comIrritante() {
         if (this.irritante) return;
         this.#irritante = ([true, false].randomElement())
                 ? new Tartaruga(this.mundo, (this.x1 + this.x2) / 2, this.y1)
                 : new Gato(this.mundo, (this.x1 + this.x2) / 2, this.y1);
-        //this.irritante.moveXY(0, -this.irritante.raio);
     }
 
-    desenharPlaca(ctx) {
-        const [m, mt] = [this.mundo, ctx.measureText(this.texto)];
-        const [x, y, w, h] = [this.x1 - m.offX, this.y1 - m.offY, this.x2 - this.x1, this.y2 - this.y1];
+    desenharPlaca(spec, ctx) {
+        const mt = ctx.measureText(this.texto(spec));
+        const [x, y, w, h] = [this.x1 - spec.offX, this.y1 - spec.offY, this.x2 - this.x1, this.y2 - this.y1];
         const vr = this.textoYC(mt);
         ctx.fillStyle = this.corPlaca;
         ctx.beginPath();
@@ -89,32 +89,41 @@ class Tubo extends Obstaculo {
         ctx.fill();
     }
 
-    desenharBarra(ctx) {
-        const m = this.mundo;
-        const [x, y, w, h] = [this.x1 - m.offX, this.y1 - m.offY, this.x2 - this.x1, this.y2 - this.y1];
-        ctx.strokeStyle = "black";
-        ctx.fillStyle = this.corBarra;
-        ctx.strokeRect(x, y, w, h);
-        ctx.fillRect(x, y, w, h);
+    #gradiente(ctx, seed) {
+        ctx.createLinearGradient(20, 0, 220, 0);
     }
 
-    desenharTexto(ctx) {
-        const t = this.texto;
-        const [m, mt] = [this.mundo, ctx.measureText(t)];
-        const [x, y, w, h] = [this.x1 - m.offX, this.y1 - m.offY, this.x2 - this.x1, this.y2 - this.y1];
-        const ty = this.textoY(mt);
+    desenharBarra(spec, ctx) {
+        const [x, y, w, h] = [this.x1 - spec.offX, this.y1 - spec.offY, this.x2 - this.x1, this.y2 - this.y1];
+        try {
+            ctx.save();
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = this.corBarra;
+            ctx.strokeRect(x, y, w, h);
+            ctx.fillRect(x, y, w, h);
+            
+            ctx.globalAlpha = 0.5;
+        } finally {
+            ctx.restore();
+        }
+    }
+
+    desenharTexto(spec, ctx) {
+        const t = this.texto(spec);
+        const [x, y, w, h] = [this.x1 - spec.offX, this.y1 - spec.offY, this.x2 - this.x1, this.y2 - this.y1];
+        const ty = this.textoY(ctx.measureText(t));
         ctx.fillStyle = this.corTexto;
         ctx.textAlign = "center";
         ctx.fillText(t, x + w / 2, ty);
     }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
         ctx.save();
         try {
             ctx.font = "22px serif";
-            this.desenharBarra(ctx);
-            this.desenharPlaca(ctx);
-            this.desenharTexto(ctx);
+            this.desenharBarra(spec, ctx);
+            this.desenharPlaca(spec, ctx);
+            this.desenharTexto(spec, ctx);
         } finally {
             ctx.restore();
         }
@@ -198,9 +207,9 @@ class Par extends GameObject {
         this.ob2.tick(deltaT);
     }
 
-    desenhar(ctx) {
-        this.ob1.desenhar(ctx);
-        this.ob2.desenhar(ctx);
+    desenhar(spec, ctx) {
+        this.ob1.desenhar(spec, ctx);
+        this.ob2.desenhar(spec, ctx);
     }
 }
 
@@ -213,7 +222,7 @@ class Chao extends Obstaculo {
     get camada() { return -1; }
     get enquadrado() { return true; }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
         ctx.save();
         try {
             ctx.fillStyle = "green";
@@ -234,7 +243,7 @@ class Teto extends Obstaculo {
     get camada() { return -1; }
     get enquadrado() { return true; }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
         ctx.save();
         try {
             ctx.fillStyle = "yellow";
@@ -254,15 +263,11 @@ class Plataforma extends Tubo {
 
     get posicao() { return "top"; }
 
-    get texto () { return this.lingua.fase(this.fase.numero); }
+    texto(spec) { return spec.lingua.fase(this.fase.numero); }
 
-    posicionar(passarinho) {
-        this.passarinho.gotoSobre(this);
-    }
-
-    desenharPlaca(ctx) {
-        const [m, mt] = [this.mundo, ctx.measureText(this.texto)];
-        const [x, y, w, h] = [this.x1 - m.offX, this.y1 - m.offY, this.x2 - this.x1, this.y2 - this.y1];
+    desenharPlaca(spec, ctx) {
+        const mt = ctx.measureText(this.texto(spec));
+        const [x, y, w, h] = [this.x1 - spec.offX, this.y1 - spec.offY, this.x2 - this.x1, this.y2 - this.y1];
         const vr = this.textoYC(mt);
         ctx.fillStyle = this.corPlaca;
         ctx.beginPath();
@@ -290,13 +295,13 @@ class Barra extends Tubo {
 
     get posicao () { return this.#posicao  ; }
 
-    get texto() {
+    texto(spec) {
         const v = 100 * this.h * this.#escala;
         const fator = (v < 100 && v > -100) ? 2 : (v < 1000 && v > -1000) ? 1 : 0;
         return "" + (Math.round(10 ** fator * this.h * this.#escala) / 10 ** fator);
     }
 
-    desenharPlaca(ctx) {
+    desenharPlaca(spec, ctx) {
     }
 }
 
@@ -304,13 +309,13 @@ class Chart extends GameObject {
     #barras;
     #irritantes;
     #fase;
-    #texto;
+    #textoId;
 
     constructor(mundo, x1, minQ, maxQ, minT, maxT, numero, espacos, fase) {
         super(mundo);
         this.#barras = [];
         this.#irritantes = [];
-        this.#texto = mundo.lingua.chart;
+        this.#textoId = Lingua.randomChartId;
         this.#fase = fase;
 
         const posicao = ["top", "bottom", "center"].randomElement();
@@ -355,34 +360,42 @@ class Chart extends GameObject {
     get x1        () { return this.barras[0].x1    ; }
     get x2        () { return this.barras.at(-1).x2; }
 
-    get enquadrado() { return this.xp2 >= -400 && this.xp1 < this.mundo.largura + 400 && this.yp1 >= 0 && this.yp2 < this.mundo.altura; }
+    #texto(spec) {
+        return spec.lingua.chart(this.#textoId);
+    }
+
+    enquadrado(spec) {
+        return this.xp2(spec) >= -400
+            && this.xp1(spec) < this.mundo.largura + 400
+            && this.yp1(spec) >= 0
+            && this.yp2(spec) < this.mundo.altura;
+    }
 
     tick(deltaT) {
         this.#barras.forEach(b => b.tick(deltaT));
     }
 
-    #desenharTexto(ctx) {
+    #desenharTexto(spec, ctx) {
         ctx.font = "30px serif";
         ctx.fillStyle = "black";
-        const m = this.mundo;
-        const x = this.x1 - m.offX;
+        const x = this.x1 - spec.offX;
         const ty = this.y1 + 50;
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-        ctx.fillText(this.#texto, x + this.w / 2, ty);
+        ctx.fillText(this.#texto(spec), x + this.w / 2, ty);
     }
 
-    desenhar(ctx) {
-        let xp1 = this.xp1 - 30;
-        let xp2 = this.xp2 + 30;
-        const yp1 = this.yp1 + 10;
-        const yp2 = this.yp2 + 10;
+    desenhar(spec, ctx) {
+        let xp1 = this.xp1(spec) - 30;
+        let xp2 = this.xp2(spec) + 30;
+        const yp1 = this.yp1(spec) + 10;
+        const yp2 = this.yp2(spec) + 10;
         const w = xp2 - xp1;
 
         ctx.save();
         try {
             ctx.font = "30px serif";
-            const mt = ctx.measureText(this.#texto);
+            const mt = ctx.measureText(this.#texto(spec));
             if (mt.width + 60 > w) {
                 const d = (mt.width - w + 60) / 2;
                 xp1 -= d;
@@ -398,7 +411,7 @@ class Chart extends GameObject {
         } finally {
             ctx.restore();
         }
-        this.#barras.forEach(b => b.desenhar(ctx));
+        this.#barras.forEach(b => b.desenhar(spec, ctx));
 
         ctx.save();
         try {
@@ -411,6 +424,6 @@ class Chart extends GameObject {
         } finally {
             ctx.restore();
         }
-        this.#desenharTexto(ctx);
+        this.#desenharTexto(spec, ctx);
     }
 }

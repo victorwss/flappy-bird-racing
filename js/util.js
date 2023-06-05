@@ -19,6 +19,7 @@ Object.defineProperty(Array.prototype, "shuffle", {
             const z = randomInt(i, this.length - 1);
             [this[i], this[z]] = [this[z], this[i]];
         }
+        return this;
     },
     writable: false,
     enumerable: false

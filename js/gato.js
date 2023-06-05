@@ -56,8 +56,19 @@ class Gato extends GameObject {
         return Math.asin(seno);
     }
 
+    escolherP
+
     get #espelhar() {
-        return this.mundo.passarinho.x < this.x;
+        const escolher = (a, b) => {
+            if (a === null) return b;
+            const da = Math.abs(this.x - a.x);
+            const db = Math.abs(this.x - b.x);
+            if (a.vivo !== b.vivo) return a.vivo ? a : b;
+            return da < db ? da : db;
+        };
+
+        const passarinho = this.mundo.specs.items.map(spec => spec.passarinho).shuffle().reduce(escolher, null);
+        return passarinho && passarinho.x < this.x;
     }
 
     colide(oq, x, y, raio) {
@@ -90,18 +101,26 @@ class Gato extends GameObject {
             if (!this.#pulos && this.#y - this.raio > mundo.altura) {
                 this.destruir();
             }
-        } else if (mundo.passarinho.vivo && this.x < mundo.passarinho.x + 300) {
-            this.#quieto = false;
-            this.#pulou = true;
-            this.#balao = new Balao(5, this.lingua.miau);
-            this.mundo.callbacks.gato();
-            const dx = mundo.passarinho.x - this.x;
-            const dy = mundo.passarinho.y - this.y;
-            const s = Math.sqrt(dx ** 2 + dy ** 2);
-            const v = randomInt(100, 700);
-            this.#vy = v * dy / s;
-            this.#vx = v * dx / s;
-            this.#pulos--;
+        } else {
+            const passarinho = mundo.specs.items
+                    .map(spec => spec.passarinho)
+                    .filter(p => p.vivo && Math.abs(this.x - p.x) < 300)
+                    .shuffle()
+                    .reduce((acc, p) => acc === null ? p : Math.abs(this.x - p.x) < Math.abs(this.x - acc.x) ? p : acc, null);
+            if (passarinho) {
+                this.#quieto = false;
+                this.#pulou = true;
+                this.#balao = new Balao(5, passarinho.lingua.miau);
+                console.log(passarinho);
+                passarinho.spec.gato();
+                const dx = passarinho.x - this.x;
+                const dy = passarinho.y - this.y;
+                const s = Math.sqrt(dx ** 2 + dy ** 2);
+                const v = randomInt(100, 700);
+                this.#vy = v * dy / s;
+                this.#vx = v * dx / s;
+                this.#pulos--;
+            }
         }
     }
 
@@ -109,10 +128,10 @@ class Gato extends GameObject {
         this.mundo.destruir(this);
     }
 
-    desenhar(ctx) {
+    desenhar(spec, ctx) {
 
-        const px = this.x - this.mundo.offX;
-        const py = this.y - this.mundo.offY;
+        const px = this.x - spec.offX;
+        const py = this.y - spec.offY;
 
         const desenharCorpo = () => {
             ctx.beginPath();
