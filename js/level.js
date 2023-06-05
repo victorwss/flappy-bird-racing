@@ -105,6 +105,10 @@ class LevelSet {
     set open(n) {
         this.#open = n;
     }
+
+    openAll() {
+        this.#open = this.length;
+    }
 }
 
 const GAME = (() => {
@@ -118,7 +122,7 @@ const GAME = (() => {
     const brightblue = rgb(192, 192, 255), lightcyan = rgb(128, 255, 255), lightorange = rgb(255, 192, 128), orange = rgb(255, 128, 0);
     const lightred = rgb(255, 128, 128), stdgray = rgb(128, 128, 128), darkgray = rgb(64, 64, 64);
 
-    function teste(g) {
+    function test(g) {
         return [
             new Fase(g, 200, 100,  0,  30, 10, 200, 200, white, midgray, black, "fase1.png" , 0, 0),
             new Fase(g, 120, 210, 61,  86,  2, 140, 700, blue , yellow , white, "fase12.png", 1, 1),
@@ -156,9 +160,16 @@ const GAME = (() => {
         ];
     }
 
+    const testSet = new LevelSet(test);
+    const easySet = new LevelSet(easy);
+    const hardSet = new LevelSet(hard);
+    testSet.openAll();
+    easySet.openAll();
+    hardSet.openAll();
+
     return Object.freeze({
-        //"Test stuff": new LevelSet(teste),
-        "Easy": new LevelSet(easy),
-        "Hard": new LevelSet(hard)
+        "Test stuff": testSet,
+        "Easy": easySet,
+        "Hard": hardSet
     });
 })();

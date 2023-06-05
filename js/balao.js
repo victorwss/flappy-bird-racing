@@ -36,10 +36,6 @@ class Balao {
             const padding = 10;
             const lineHeight = Math.abs(medida2.actualBoundingBoxAscent) - Math.abs(medida2.actualBoundingBoxDescent);
             const height = partes.length * lineHeight + padding * (partes.length - 1);
-            /*const medida = ctx.measureText(this.#texto);
-            const medida2 = ctx.measureText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-            const width = medida.width;
-            const height = Math.abs(medida2.actualBoundingBoxAscent) - Math.abs(medida2.actualBoundingBoxDescent);*/
 
             ctx.beginPath();
             ctx.roundRect(x + DISTANCIA, y - MARGEM - height / 2, width + 2 * MARGEM, height + 2 * MARGEM, 8);

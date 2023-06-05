@@ -3,6 +3,9 @@
 const [ALTURA_TOTAL, LARGURA_TOTAL] = [500, 750];
 const [ALTURA_CHAO, ALTURA_TETO] = [ALTURA_TOTAL - 50, 50];
 
+const SPLASH_TIME = 10;
+const SPLASH_RAMPDOWN = 2;
+
 class GameObject {
     #mundo;
 
@@ -158,6 +161,51 @@ class Mundo {
         ctx.globalAlpha = 1.0;
     }
 
+    #desenharSplash(spec, ctx) {
+        if (spec.fase.numero !== 1 && !spec.fase.ultima) return;
+        const t = spec.splash;
+        if (!t) return;
+        const alpha = t <               SPLASH_RAMPDOWN ?                t  / SPLASH_RAMPDOWN
+                    : t > SPLASH_TIME - SPLASH_RAMPDOWN ? (SPLASH_TIME - t) / SPLASH_RAMPDOWN
+                    : 1;
+        ctx.save();
+        try {
+            ctx.globalAlpha = alpha * 0.6;
+
+            const frase = spec.fase.numero === 1 ? spec.eraUmaVez : spec.finalFeliz;
+            const partes = frase.split("\n");
+            for (let m = 100; m > 10; m--) {
+                ctx.font = m + "px 'Pinyon'";
+                const tamanho = partes.map(p => ctx.measureText(p).width).reduce((a, b) => Math.max(a, b), 0);
+                if (tamanho < this.largura - 70) break;
+            }
+
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(25, 25, this.largura - 50, this.altura / 2 - 50, 30);
+            ctx.stroke();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.roundRect(30, 30, this.largura - 60, this.altura / 2 - 60, 30);
+            ctx.stroke();
+            ctx.fill();
+
+            ctx.strokeStyle = "black";
+            ctx.textAlign = "center";
+            ctx.lineWidth = 1;
+            ctx.fillStyle = spec.cor;
+
+            for (let i = 0; i < partes.length; i++) {
+                ctx.strokeText(partes[i], this.largura / 2, (i + 1) * this.altura / 2 / (partes.length + 1));
+                ctx.fillText  (partes[i], this.largura / 2, (i + 1) * this.altura / 2 / (partes.length + 1));
+            }
+        } finally {
+            ctx.restore();
+        }
+    }
+
     desenhar(spec, ctx) {
         ctx.save();
         try {
@@ -177,6 +225,7 @@ class Mundo {
             ctx.fillStyle = "black";
             ctx.textAlign = "left";
             ctx.fillText(spec.keyNameIntl, 5, 33);
+            this.#desenharSplash(spec, ctx);
         } finally {
             ctx.restore();
         }
