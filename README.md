@@ -73,7 +73,7 @@ Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divi
 
 ## Tips
 
-Type "cheat()" in the browser console to unlock all the levels.
+Type `cheat();` in the browser console to unlock all the levels. Also, you might see the end by doing that.
 
 ## Known issues
 
