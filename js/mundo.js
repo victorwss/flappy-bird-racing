@@ -205,8 +205,8 @@ class Mundo {
             ctx.fillStyle = spec.cor;
 
             for (let i = 0; i < partes.length; i++) {
-                ctx.strokeText(partes[i], this.largura / 2, (i + 1) * this.altura / 2 / (partes.length + 1));
-                ctx.fillText  (partes[i], this.largura / 2, (i + 1) * this.altura / 2 / (partes.length + 1));
+                ctx.strokeText(partes[i], this.largura / 2, 30 + (i + 1) * (this.altura - 30) / 2 / (partes.length + 1));
+                ctx.fillText  (partes[i], this.largura / 2, 30 + (i + 1) * (this.altura - 30) / 2 / (partes.length + 1));
             }
         } finally {
             ctx.restore();
