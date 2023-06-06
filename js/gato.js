@@ -141,6 +141,27 @@ class Gato extends GameObject {
         if (px === 0 || px !== px || px === undefined || px === null) throw new Error();
         if (py === 0 || py !== py || py === undefined || py === null) throw new Error();
 
+        const desenharPatasAbertas = () => {
+            for (const i of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+                try {
+                    ctx.save();
+                    ctx.scale(i[0], i[1]);
+                    ctx.translate(10, this.raio / 4);
+                    ctx.rotate(Math.PI / 3);
+                    ctx.beginPath();
+                    ctx.moveTo(2 * this.raio / 4    , - 5);
+                    ctx.lineTo(5 * this.raio / 4    , - 5);
+                    ctx.lineTo(5 * this.raio / 4 + 5,   0);
+                    ctx.lineTo(5 * this.raio / 4    ,   5);
+                    ctx.lineTo(2 * this.raio / 4    ,   5);
+                    ctx.fill();
+                    ctx.stroke();
+                } finally {
+                    ctx.restore();
+                }
+            }
+        }
+
         const desenharPatasAbaixo = sinal => {
             try {
                 ctx.save();
@@ -278,9 +299,13 @@ class Gato extends GameObject {
             ctx.fill();
             ctx.stroke();
 
+            if (this.#pulou) {
+                desenharPatasAbertas();
+            } else {
+                desenharPatasAbaixo(1);
+                desenharPatasAbaixo(-1);
+            }
             desenharCabeca();
-            desenharPatasAbaixo(1);
-            desenharPatasAbaixo(-1);
 
             /* ctx.strokeStyle = "red";
             ctx.beginPath();
