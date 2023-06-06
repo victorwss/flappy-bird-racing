@@ -66,20 +66,26 @@ If you do disturb them, they will say something nasty and will spin around the s
 They will be one of your worst nightmares in this game!
 
 Also, the game changes back and forth between the musics
-***Learn to Fly*** from ***Foo Fighters*** and ***Iridescent*** by ***Linkin' Park***.
+*Learn to Fly* from *Foo Fighters* and *Iridescent* by *Linkin' Park*.
 However, to avoid RIAA and non-free-content issues (as suggested by Amarillion during the competition),
 they are just MID versions of the original songs converted to MP3.
 
-Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divirta-se bastante! Divertiti molto!
+* Have a lot fun!
+* Amusez-vous beaucoup !
+* ¡Diviértete mucho!
+* Hab viel Spaß!
+* Divirta-se bastante!
+* Divertiti molto!
 
 ## Tips
 
-Type `cheat();` in the browser console to unlock all the levels. Also, you might see the ending by doing that.
+Type `cheat();` in the browser console to unlock all the levels. Also, you might easily see the ending by doing that.
 
 ## Changes after the submission
 
-Since this is for a compettion, I prefer to keep the changes after the submission small and minimally affecting the
-gameplay. So far the changes are those:
+Since this is for a competition,
+I prefer to keep the changes after the submission small and minimally affecting the gameplay.
+So far the changes are those:
 
 - With two or more players, it used be difficulty to tell for sure which bird who is controlling.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/b7d8577ae6539c04fd13dd106e6b3f9cbb516b7a)
@@ -89,6 +95,11 @@ instead of all of the them, so that is the one you are controlling.
 - The music and sound effects might become boring and annoying after listening them over and over again.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/46f49f63cc5c166883868470b99b198833b6667e)
 Now you can turn them on or off as you wish.
+
+- A jumping cat that is seated is just weird.
+[**Fixed in this commit**](https://github.com/victorwss/flappy-bird-racing/commit/badc83e89cb4a0c646b216a22413c1c4f015d3ee)
+The cat animation when jumping is better.
+Note that this change is entirely cosmetic and don't change the actual gameplay mechanics.
 
 ## Known issues
 
