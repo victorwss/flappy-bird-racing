@@ -84,7 +84,7 @@ Type `cheat();` in the browser console to unlock all the levels. Also, you might
 
 ## TINS 2023
 
-The rules of the competition were:
+The [rules of the competition](https://tins.amarillion.org/2023/rules) were:
 
 > genre rule #41:<br>Fable: all characters are animals
 > 
@@ -137,6 +137,9 @@ Note that this change is entirely cosmetic and don't change the actual gameplay 
 it would erroneously trigger multiple clicks to that button.
 This could lead to restarting the game multiple times per second until the Enter key is released.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/287a1a22f451019324ffbcc267e4c7bc855c66bd)
+
+- Added credits and relevant links, including to the [TINS 2023](https://tins.amarillion.org/2023/) site.
+[**Changed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/933d7537bb0a1bdabf66114a333848fc0732c672)
 
 - After the level 9 in hard mode or in the ending level in easy mode,
 the text colors in the top and botton label could be wrong.
