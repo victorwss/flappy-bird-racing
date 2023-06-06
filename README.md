@@ -74,11 +74,25 @@ Have a lot fun! Amusez-vous beaucoup ! ¡Diviértete mucho! Hab viel Spaß! Divi
 
 ## Tips
 
-Type `cheat();` in the browser console to unlock all the levels. Also, you might see the end by doing that.
+Type `cheat();` in the browser console to unlock all the levels. Also, you might see the ending by doing that.
+
+## Changes after the submission
+
+Since this is for a compettion, I prefer to keep the changes after the submission small and minimally affecting the
+gameplay. So far the changes are those:
+
+- With two or more players, it used be difficulty to tell for sure which bird who is controlling.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/b7d8577ae6539c04fd13dd106e6b3f9cbb516b7a)
+Now, you see only your bird freshly (re)spawned birds having iridescent colors in your game view
+instead of all of the them, so that is the one you are controlling.
+
+- The music and sound effects might become boring and annoying after listening them over and over again.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/46f49f63cc5c166883868470b99b198833b6667e)
+Now you can turn them on or off as you wish.
 
 ## Known issues
 
-- The sounds are likely to fail to load in Safari due to lack of MP3 support.
+- The sounds and music are likely to fail to load in Safari due to lack of MP3 support.
 Since every other modern browser does support MP3 and converting it might take a some time and space, I think it is ok.
 I will do it later if there is demand.
 
@@ -86,9 +100,20 @@ I will do it later if there is demand.
 
 - Excessive memory and CPU usage.
 
-- <strike>With two or more players, it might be difficulty to tell for sure which bird who is controlling.</strike>
-[**Fixed.**](https://github.com/victorwss/flappy-bird-racing/commit/b7d8577ae6539c04fd13dd106e6b3f9cbb516b7a)
-
-- Should add music and sound on/off buttons. The music might become annoying after some time.
-
 - To avoid the control buttons capturing the Enter key, click the blank area in the page before playing.
+
+# Licenses
+
+## Pinyon Script font
+
+- [Obtained from Google fonts as a free font.](https://fonts.google.com/specimen/Pinyon+Script)
+
+- [Available at GitHub.](https://github.com/SorkinType/Pinyon)
+
+- [Open Font License version 1.1.](/fonts/Pinyon_Script/OFL.txt)
+
+## Parisienne font
+
+- [Obtained from Google fonts as a free font.](https://fonts.google.com/specimen/Parisienne)
+
+- [Open Font License version 1.1.](/fonts/Parisienne/OFL.txt)
