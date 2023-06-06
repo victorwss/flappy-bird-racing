@@ -225,6 +225,9 @@ class Mundo {
             this.#specs.items.filter(s => s.passarinho.spec !== spec).forEach(s => s.passarinho.desenhar(spec, ctx));
             this.#specs.items.filter(s => s.passarinho.spec === spec).forEach(s => s.passarinho.desenhar(spec, ctx));
 
+            ctx.fillStyle = "black";
+            ctx.font = "30px serif";
+            ctx.textAlign = "center";
             const t = spec.lingua.fase(spec.fase.numero);
             const tw1 = ctx.measureText(t);
             ctx.fillStyle = spec.fase.claro;
@@ -233,10 +236,7 @@ class Mundo {
             ctx.roundRect((this.largura - tw1.width - 20) / 2, this.altura - 42, tw1.width + 20, 34, 10);
             ctx.fill();
             ctx.stroke();
-
-            ctx.fillStyle = "black";
-            ctx.font = "30px serif";
-            ctx.textAlign = "center";
+            ctx.fillStyle = spec.fase.escuro;
             ctx.fillText(t, this.largura / 2, this.altura - 15);
 
             const tw2 = ctx.measureText(spec.keyNameIntl);
@@ -246,10 +246,9 @@ class Mundo {
             ctx.roundRect((this.largura - tw2.width - 20) / 2, 8, tw2.width + 20, 34, 10);
             ctx.fill();
             ctx.stroke();
-
-            ctx.fillStyle = "black";
-            ctx.textAlign = "center";
+            ctx.fillStyle = spec.fase.escuro;
             ctx.fillText(spec.keyNameIntl, this.largura / 2, 33);
+
             this.#desenharSplash(spec, ctx);
         } finally {
             ctx.restore();
