@@ -1,6 +1,6 @@
 # Flappy bird racing
 
-![Screenshot](https://github.com/victorwss/flappy-bird-racing/blob/main/screenshot.png?raw=true)
+![Screenshot](/screenshot.png)
 
 This is a [TINS 2023](https://tins.amarillion.org/2023) entry by [Victor Williams Stafusa da Silva](https://github.com/victorwss).
 
@@ -81,6 +81,37 @@ they are just MID versions of the original songs converted to MP3.
 ## Tips
 
 Type `cheat();` in the browser console to unlock all the levels. Also, you might easily see the ending by doing that.
+
+## TINS 2023
+
+The rules of the competition were:
+
+> genre rule #41:<br>Fable: all characters are animals
+> 
+> **Comments**: Put animal characters in your game! If you want to interpret the rule literally, then you could follow the classic defintition of a fable: "A usually short narrative making an edifying or cautionary point and often employing as characters animals that speak and act like humans.".
+
+> art rule #18:<br>Iridescence
+>
+> **Comments**: [Iridescence](https://en.wikipedia.org/wiki/Iridescence), a colorful, rainbow-like effect that you see in things like soap bubbles, oil slicks, seashells and butterflies.
+
+> art rule #32:<br>All Dialog must be implemented comic-book bubble style
+>
+> **Comments**: A comic book convention, [speech balloons](https://en.wikipedia.org/wiki/Speech_balloon) and thought bubbles are widely used in games too. 
+
+> tech rule #65:<br>Implement a chart (bar chart, pie chart, any kind of chart)
+>
+> **Comments**: A good chart is useful in a sim or management game, to optimize your strategy. Also action games can use charts, to visualize player achievements. But the earliest use of charts in games is probably [Pacman](https://tins.amarillion.org/upload/images/pacman-graph-not-pacman-287927883.jpeg)
+> [image omitted for brevity, just click the above link if you want to]
+
+> bonus rule #24:<br>Dynamic Duo - If you make your game suitable for two players, you may skip one rule.
+>
+> **Comments**: Basically, you may substitute any rule that you dislike for this rule. If you choose to do so, declare this in your game description for the sake of clarity. All kinds of two-player styles are allowed: online, split-screen, competive or cooperative, hot seat, assymetric, you name it. 
+
+How it is implemented? Well a image is worth 1000 words, so see those:
+
+![Screenshot](/screenshot.png)
+
+![Screenshot 2](/screenshot2.png)
 
 ## Changes after the submission
 
