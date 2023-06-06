@@ -18,7 +18,8 @@ However, to reach the end, it will be a long and troublesome path full of hazard
 so watch out. But, you have infinite lifes, and will respawn a few seconds after the death, so you can always try again
 until you do it.
 
-First, choose if you want the easy mode (5 levels) or the hard mode (13 levels). They gets harder and harder.
+First, choose if you want the easy mode (5 levels + ending in level 6) or the hard mode (13 levels + ending in level 14).
+The levels get harder and harder as you progress through them.
 Then, you also select how many players you want to have, from 1 to 6.
 
 ## The players
@@ -85,7 +86,7 @@ Type `cheat();` in the browser console to unlock all the levels. Also, you might
 
 Since this is for a competition,
 I prefer to keep the changes after the submission small and minimally affecting the gameplay.
-So far the changes are those:
+So far, the changes are those:
 
 - With two or more players, it used be difficulty to tell for sure which bird who is controlling.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/b7d8577ae6539c04fd13dd106e6b3f9cbb516b7a)
@@ -105,6 +106,11 @@ Note that this change is entirely cosmetic and don't change the actual gameplay 
 it would erroneously trigger multiple clicks to that button.
 This could lead to restarting the game multiple times per second until the Enter key is released.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/287a1a22f451019324ffbcc267e4c7bc855c66bd)
+
+- After the level 9 in hard mode or in the ending level in easy mode,
+the text colors in the top and botton label could be wrong.
+Also the size of the bottom label could be wrong also.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/e0f735ff0a5752a7d5c77825dff02318ac3a9915)
 
 ## Known issues
 
