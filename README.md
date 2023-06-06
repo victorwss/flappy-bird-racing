@@ -112,6 +112,9 @@ the text colors in the top and botton label could be wrong.
 Also the size of the bottom label could be wrong also.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/e0f735ff0a5752a7d5c77825dff02318ac3a9915)
 
+- The fable text could overflow its box.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/60ad033e8601bb15c43466042bedc97e97ce2819)
+
 ## Known issues
 
 - The sounds and music are likely to fail to load in Safari due to lack of MP3 support.
