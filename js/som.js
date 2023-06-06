@@ -7,6 +7,8 @@ class Som {
     #musica;
     #sonsTocando = {};
     #chave = 0;
+    #musicaOn;
+    #soundsOn;
 
     static #handler(src) {
         return e => {
@@ -21,13 +23,44 @@ class Som {
 
     constructor(levelSet) {
         this.#levelSet = levelSet;
+        this.#musicaOn = this.#soundsOn = true;
+        this.#configureToggleButtons();
+    }
+
+    #configureToggleButtons() {
+        const mon  = document.getElementById("music-on");
+        const moff = document.getElementById("music-off");
+        const son  = document.getElementById("sound-on");
+        const soff = document.getElementById("sound-off");
+        mon.onclick = async () => {
+            mon.classList.add("selected");
+            moff.classList.remove("selected");
+            await this.#toggleMusica(true);
+        };
+        moff.onclick = async () => {
+            mon.classList.remove("selected");
+            moff.classList.add("selected");
+            await this.#toggleMusica(false);
+        };
+        son.onclick = async () => {
+            son.classList.add("selected");
+            soff.classList.remove("selected");
+            await this.#toggleSound(true);
+        };
+        soff.onclick = async () => {
+            son.classList.remove("selected");
+            soff.classList.add("selected");
+            await this.#toggleSound(false);
+        };
     }
 
     async pontuou(spec) {
+        if (!this.#soundsOn) return;
         // TODO...
     }
 
     async passouDeFase(spec) {
+        if (!this.#soundsOn) return;
         const fase = spec.fase;
         const chave = this.#chave++;
         const a = new Audio();
@@ -44,9 +77,15 @@ class Som {
         if (fase.ultima || fase === spec.mundo.faseInicial) await this.#voarvoar();
     }
 
-    async #playMusic(name, next) {
+    async #stopMusic() {
         this.#musica?.pause();
+        this.#musica = null;
         document.getElementById("now-playing").innerHTML = "&nbsp;";
+    }
+
+    async #playMusic(name, next) {
+        await this.#stopMusic();
+        if (!this.#musicaOn) return;
         const a = new Audio();
         a.src = `${SOM}/${name}.${SOM}`;
         a.volume = name === "voarvoar" ? 1.0 : 0.3;
@@ -73,6 +112,7 @@ class Som {
     }
 
     async bateuAsas(spec) {
+        if (!this.#soundsOn) return;
         const chave = this.#chave++;
         const a = new Audio();
         this.#sonsTocando["" + chave] = a;
@@ -84,6 +124,7 @@ class Som {
     }
 
     async gato(spec) {
+        if (!this.#soundsOn) return;
         const chave = this.#chave++;
         const a = new Audio();
         this.#sonsTocando["" + chave] = a;
@@ -95,9 +136,7 @@ class Som {
     }
 
     async morreu(spec) {
-        //this.#musica?.pause();
-        //document.getElementById("now-playing").innerHTML = "&nbsp;";
-        //this.#musica = undefined;
+        if (!this.#soundsOn) return;
         const chave1 = this.#chave++;
         const plaft = new Audio();
         this.#sonsTocando["" + chave1] = plaft;
@@ -122,5 +161,21 @@ class Som {
             this.#sonsTocando[key].pause();
         }
         this.#sonsTocando = {};
+    }
+
+    async #toggleSound(v) {
+        if (v === this.#soundsOn) return;
+        this.#soundsOn = v;
+        if (!v) this.silenciar();
+    }
+
+    async #toggleMusica(v) {
+        if (v === this.#musicaOn) return;
+        this.#musicaOn = v;
+        if (v) {
+            await this.#voarvoar();
+        } else {
+            await this.#stopMusic();
+        }
     }
 }
