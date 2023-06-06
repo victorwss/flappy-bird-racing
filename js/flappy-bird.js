@@ -135,6 +135,7 @@ class FlappyBird {
         this.#calls.som.silenciar();
         this.#calls.holder.innerHTML = "";
         this.#mundo = null;
+        document.getElementById("invisible-event-blackhole").focus();
     }
 
     #ficarAzul() {

@@ -33,21 +33,25 @@ class Som {
         const son  = document.getElementById("sound-on");
         const soff = document.getElementById("sound-off");
         mon.onclick = async () => {
+            document.getElementById("invisible-event-blackhole").focus();
             mon.classList.add("selected");
             moff.classList.remove("selected");
             await this.#toggleMusica(true);
         };
         moff.onclick = async () => {
+            document.getElementById("invisible-event-blackhole").focus();
             mon.classList.remove("selected");
             moff.classList.add("selected");
             await this.#toggleMusica(false);
         };
         son.onclick = async () => {
+            document.getElementById("invisible-event-blackhole").focus();
             son.classList.add("selected");
             soff.classList.remove("selected");
             await this.#toggleSound(true);
         };
         soff.onclick = async () => {
+            document.getElementById("invisible-event-blackhole").focus();
             son.classList.remove("selected");
             soff.classList.add("selected");
             await this.#toggleSound(false);
