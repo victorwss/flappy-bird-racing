@@ -101,7 +101,7 @@ class Tubo extends Obstaculo {
             ctx.fillStyle = this.corBarra;
             ctx.strokeRect(x, y, w, h);
             ctx.fillRect(x, y, w, h);
-            
+
             ctx.globalAlpha = 0.5;
         } finally {
             ctx.restore();
@@ -288,12 +288,16 @@ class Barra extends Tubo {
     #escala;
     #posicao;
     #cor;
+    #negativo;
 
     constructor(mundo, x1, y1, numero, fase, escala, posicao, cor) {
-        super(mundo, x1, x1 + Math.max(fase.larguraObstaculos, 65), y1, mundo.alturaChao - 30, numero, fase);
+        const y2 = mundo.alturaChao - 30;
+        const negativo = y1 > y2;
+        super(mundo, x1, x1 + Math.max(fase.larguraObstaculos, 65), y1, y2, numero, fase);
         this.#escala = escala;
         this.#posicao = posicao;
         this.#cor = cor;
+        this.#negativo = negativo;
     }
 
     get corBarra() { return this.#cor      ; }
@@ -304,7 +308,7 @@ class Barra extends Tubo {
     texto(spec) {
         const v = 100 * this.h * this.#escala;
         const fator = (v < 100 && v > -100) ? 2 : (v < 1000 && v > -1000) ? 1 : 0;
-        return "" + (Math.round(10 ** fator * this.h * this.#escala) / 10 ** fator);
+        return (this.#negativo ? "-" : "") + (Math.round(10 ** fator * this.h * this.#escala) / 10 ** fator);
     }
 
     desenharPlaca(spec, ctx) {
