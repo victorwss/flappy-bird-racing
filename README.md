@@ -97,9 +97,14 @@ instead of all of the them, so that is the one you are controlling.
 Now you can turn them on or off as you wish.
 
 - A jumping cat that is seated is just weird.
-[**Fixed in this commit**](https://github.com/victorwss/flappy-bird-racing/commit/badc83e89cb4a0c646b216a22413c1c4f015d3ee)
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/badc83e89cb4a0c646b216a22413c1c4f015d3ee)
 The cat animation when jumping is better.
 Note that this change is entirely cosmetic and don't change the actual gameplay mechanics.
+
+- If you hold down the Enter key after pressing some button without clicking anything else in-between,
+it would erroneously trigger multiple clicks to that button.
+This could lead to restarting the game multiple times per second until the Enter key is released.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/287a1a22f451019324ffbcc267e4c7bc855c66bd)
 
 ## Known issues
 
@@ -110,8 +115,6 @@ I will do it later if there is demand.
 - Not tested in mobile devices.
 
 - Excessive memory and CPU usage.
-
-- To avoid the control buttons capturing the Enter key, click the blank area in the page before playing.
 
 # Licenses
 
