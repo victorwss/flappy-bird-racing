@@ -149,6 +149,9 @@ Also the size of the bottom label could be wrong also.
 - The fable text could overflow its box.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/60ad033e8601bb15c43466042bedc97e97ce2819)
 
+- A bar chart with a negative value used to omit its minus sign.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/259b8cb1cc15eec34d1e218819a24893f1cf3b1a)
+
 - A lot of changes to this very README.
 
 ## Known issues
