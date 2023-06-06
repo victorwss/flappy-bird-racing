@@ -107,7 +107,7 @@ The [rules of the competition](https://tins.amarillion.org/2023/rules) were:
 >
 > **Comments**: Basically, you may substitute any rule that you dislike for this rule. If you choose to do so, declare this in your game description for the sake of clarity. All kinds of two-player styles are allowed: online, split-screen, competive or cooperative, hot seat, assymetric, you name it. 
 
-How it is implemented? Well a image is worth 1000 words, so see those:
+How it is implemented? Well a image is worth 1000 words, so see those for the 2000-word equivalent:
 
 ![Screenshot](/screenshot.png)
 
