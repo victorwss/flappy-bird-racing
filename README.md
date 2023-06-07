@@ -152,6 +152,9 @@ Further the size of the bottom label could be wrong too.
 - A bar chart with a negative value used to omit its minus sign.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/259b8cb1cc15eec34d1e218819a24893f1cf3b1a)
 
+- The baseline of the chart was missing because a NaN was produced when trying to calculate its coordinates.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/19a50c894aef1c91987e16dd6f74fd0f96ebf2f8)
+
 - A lot of changes to this very README and its screenshots.
 
 ## Known issues
