@@ -143,7 +143,7 @@ This could lead to restarting the game multiple times per second until the Enter
 
 - After the level 9 in hard mode or in the ending level in easy mode,
 the text colors in the top and botton label could be wrong.
-Also the size of the bottom label could be wrong also.
+Further the size of the bottom label could be wrong too.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/e0f735ff0a5752a7d5c77825dff02318ac3a9915)
 
 - The fable text could overflow its box.
@@ -152,7 +152,7 @@ Also the size of the bottom label could be wrong also.
 - A bar chart with a negative value used to omit its minus sign.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/259b8cb1cc15eec34d1e218819a24893f1cf3b1a)
 
-- A lot of changes to this very README.
+- A lot of changes to this very README and its screenshots.
 
 ## Known issues
 
