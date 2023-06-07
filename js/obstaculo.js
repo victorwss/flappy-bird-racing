@@ -303,6 +303,7 @@ class Barra extends Tubo {
     get corBarra() { return this.#cor      ; }
     get corTexto() { return "black"        ; }
 
+    get negativo() { return this.#negativo ; }
     get posicao () { return this.#posicao  ; }
 
     texto(spec) {
@@ -428,8 +429,11 @@ class Chart extends GameObject {
             ctx.beginPath();
             ctx.lineWidth = 3;
             ctx.strokeStyle = "black";
-            ctx.moveTo(this.xp1, this.barras[0].yp2);
-            ctx.lineTo(this.xp2, this.barras[0].yp2);
+            const b0 = this.barras[0];
+            const [x1, x2] = [b0.xp1(spec), this.barras.at(-1).xp2(spec)];
+            const y = b0.negativo ? b0.yp1(spec) : b0.yp2(spec);
+            ctx.moveTo(x1 - 10, y);
+            ctx.lineTo(x2 + 10, y);
             ctx.stroke();
         } finally {
             ctx.restore();
