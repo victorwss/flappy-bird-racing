@@ -133,7 +133,7 @@ const LINGUAS = {
         ["Hast du mich vermisst?", "Doch falls mal alles schief geht\nkomm doch bitte gerne schnell zurück", "O Freunde, nicht diese töne!\nSondern lasst uns angenehmere anstimmen\nund freudenvollere!"],
         ["Ich bin ein deutscher Vogel.", "Ich bin ein österreichischer Vogel.", "Ich bin ein schweizer Vogel."],
         ["Idiot!", "Ich hasse\ndich!", "Dummer\nVogel!", "Stör mich\nnicht!", "Lassen Sie\nmich allein!", "Täuschen!", "Fahr zur\nHölle!"],
-        {"Space": "Eingabetaste", "Enter": "Leertaste", "Numpad5": "Zifferntaste 5", "KeyQ": "Q-Taste", "KeyP": "P-Taste", "KeyT": "T-Taste"}
+        {"Space": "Leertaste", "Enter": "Eingabetaste", "Numpad5": "Zifferntaste 5", "KeyQ": "Q-Taste", "KeyP": "P-Taste", "KeyT": "T-Taste"}
     ),
     it: new Lingua(
         "it",
