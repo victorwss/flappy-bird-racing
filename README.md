@@ -155,6 +155,9 @@ Further the size of the bottom label could be wrong too.
 - The baseline of the chart was missing because a NaN was produced when trying to calculate its coordinates.
 [**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/19a50c894aef1c91987e16dd6f74fd0f96ebf2f8)
 
+- The spacebar and Enter words from German were switched as pointed out by Elias.
+[**Fixed in this commit.**](https://github.com/victorwss/flappy-bird-racing/commit/650dcf143515cad234be6a9d82a539b831fd49d9)
+
 - A lot of changes to this very README and its screenshots.
 
 ## Known issues
