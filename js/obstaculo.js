@@ -269,7 +269,7 @@ class Plataforma extends Tubo {
 
     get posicao() { return "top"; }
 
-    texto(spec) { return spec.lingua.fase(this.fase.numero); }
+    texto(spec) { return this.fase.ultima ? spec.lingua.fim : spec.lingua.fase(this.fase.numero); }
 
     desenharPlaca(spec, ctx) {
         const mt = ctx.measureText(this.texto(spec));
