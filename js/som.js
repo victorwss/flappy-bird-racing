@@ -1,6 +1,7 @@
 "use strict";
 
 const SOM = "mp3";
+const NUMERADAS = 13;
 
 class Som {
     #levelSet;
@@ -72,9 +73,10 @@ class Som {
         a.onended = async () => {
             delete this.#sonsTocando["" + chave];
         };
-        a.src = fase.ultima
-                ? `${SOM}/${spec.lingua.tagSom}-fim.${SOM}`
-                : `${SOM}/${spec.lingua.tagSom}-fase${fase.numero}.${SOM}`;
+        a.src = fase.ultima                   ? `${SOM}/${spec.lingua.tagSom}-fim.${SOM}`
+              : fase.numero <= NUMERADAS      ? `${SOM}/${spec.lingua.tagSom}-fase${fase.numero}.${SOM}`
+              : (fase.numero - NUMERADAS) % 2 ? `${SOM}/${spec.lingua.tagSom}-fasex1.${SOM}`
+              :                                 `${SOM}/${spec.lingua.tagSom}-fasex2.${SOM}`;
         fase.openMe();
         document.getElementById("recomecar-" + fase.numero).removeAttribute("disabled");
         await a.play().catch(Som.#handler(a.src));

@@ -141,6 +141,22 @@ const GAME = (() => {
         ];
     }
 
+    function midi(g) {
+        return [
+            new Fase(g, 200, 100,  0,  30, 10, 200, 200, white      , midgray   , black, "fase1.png" , 0, 0), //  10 -  11
+            new Fase(g, 190, 110,  0,  36, 11, 190, 220, brightpink , lightpink , black, "fase2.png" , 1, 1), //  12 -  21
+            new Fase(g, 180, 120, 10,  42, 12, 180, 240, brightblue , lightblue , black, "fase3.png" , 1, 1), //  22 -  33
+            new Fase(g, 170, 130, 15,  48, 13, 170, 260, lightcyan  , cyan      , black, "fase4.png" , 2, 2), //  34 -  46
+            new Fase(g, 165, 140, 20,  54, 14, 165, 280, lightgreen , green     , black, "fase5.png" , 2, 2), //  47 -  60
+            new Fase(g, 160, 150, 25,  60, 17, 165, 300, yellow     , darkyellow, black, "fase6.png" , 3, 2), //  61 -  77
+            new Fase(g, 155, 160, 30,  66, 23, 165, 325, lightorange, orange    , black, "fase7.png" , 4, 3), //  78 - 100
+            new Fase(g, 150, 170, 35,  72, 25, 160, 350, lightred   , red       , black, "fase8.png" , 5, 3), // 101 - 125
+            new Fase(g, 145, 180, 40,  76, 25, 160, 375, brown      , darkbrown , white, "fase9.png" , 6, 3), // 126 - 150
+            new Fase(g, 140, 190, 47,  80, 25, 155, 400, stdgray    , darkgray  , white, "fase10.png", 7, 4), // 151 - 175
+            new Fase(g,   0, 100,  0,   1,  1, 200,   0, cyan       , green     , blue , "fim.png"   , 0, 0)  // 200
+        ];
+    }
+
     function hard(g) {
         return [
             new Fase(g, 200, 100,  0,  30, 10, 200, 200, white      , midgray   , black, "fase1.png" , 0, 0), //  10 -  11
@@ -160,14 +176,49 @@ const GAME = (() => {
         ];
     }
 
+    function comp(g) {
+        return [
+            new Fase(g, 200, 100,  0,  30, 10, 200, 200, white      , midgray   , black, "fase1.png" , 0, 0),
+            new Fase(g, 200, 100,  0,  30, 10, 200, 200, brightpink , lightpink , black, "fase2.png" , 0, 0),
+            new Fase(g, 190, 110,  0,  36, 10, 190, 220, brightblue , lightblue , black, "fase3.png" , 1, 1),
+            new Fase(g, 190, 110,  0,  36, 10, 190, 220, lightcyan  , cyan      , black, "fase4.png" , 1, 1),
+            new Fase(g, 180, 120, 10,  42, 10, 180, 240, lightgreen , green     , black, "fase5.png" , 1, 1),
+            new Fase(g, 180, 120, 10,  42, 10, 180, 240, yellow     , darkyellow, black, "fase6.png" , 1, 1),
+            new Fase(g, 170, 130, 15,  48, 10, 170, 260, lightorange, orange    , black, "fase7.png" , 2, 2),
+            new Fase(g, 170, 130, 15,  48, 10, 170, 260, lightred   , red       , black, "fase8.png" , 2, 2),
+            new Fase(g, 165, 140, 20,  54, 10, 165, 280, brown      , darkbrown , black, "fase9.png" , 2, 2),
+            new Fase(g, 165, 140, 20,  54, 10, 165, 280, stdgray    , darkgray  , black, "fase10.png", 2, 2),
+            new Fase(g, 160, 150, 25,  60, 10, 165, 300, red        , green     , black, "fase11.png", 3, 2),
+            new Fase(g, 160, 150, 25,  60, 10, 165, 300, blue       , yellow    , black, "fase12.png", 3, 2),
+            new Fase(g, 155, 160, 30,  66, 10, 165, 325, blue       , cyan      , white, "fase13.png", 4, 3),
+            new Fase(g, 155, 160, 30,  66, 10, 165, 325, blue       , yellow    , black, "fase12.png", 4, 3),
+            new Fase(g, 150, 170, 35,  72, 10, 160, 350, red        , green     , black, "fase11.png", 5, 3),
+            new Fase(g, 150, 170, 35,  72, 10, 160, 350, stdgray    , darkgray  , black, "fase10.png", 5, 3),
+            new Fase(g, 145, 180, 40,  76, 10, 160, 375, brown      , darkbrown , black, "fase9.png" , 6, 3),
+            new Fase(g, 145, 180, 40,  76, 10, 160, 375, lightred   , red       , black, "fase8.png" , 6, 3),
+            new Fase(g, 140, 190, 47,  80, 10, 155, 400, lightorange, orange    , black, "fase7.png" , 7, 4),
+            new Fase(g, 140, 190, 47,  80, 10, 155, 400, yellow     , darkyellow, black, "fase6.png" , 7, 4),
+            new Fase(g, 130, 200, 54,  83, 10, 150, 500, lightgreen , green     , black, "fase5.png" , 8, 4),
+            new Fase(g, 130, 200, 54,  83, 10, 150, 500, lightcyan  , cyan      , black, "fase4.png" , 8, 4),
+            new Fase(g, 120, 210, 61,  86, 10, 140, 600, brightblue , lightblue , black, "fase3.png" , 9, 4),
+            new Fase(g, 120, 210, 61,  86, 10, 140, 600, brightpink , lightpink , black, "fase2.png" , 9, 4),
+            new Fase(g, 120, 210, 61,  86, 10, 140, 700, white      , midgray   , black, "fase1.png" , 9, 4),
+            new Fase(g,   0, 100,  0,   1,  1, 200,   0, cyan       , green     , blue , "fim.png"   , 0, 0) 
+        ];
+    }
+
     const testSet = new LevelSet(test);
     const easySet = new LevelSet(easy);
+    const midiSet = new LevelSet(midi);
     const hardSet = new LevelSet(hard);
+    const compSet = new LevelSet(comp);
 
     return Object.freeze({
         //"Test stuff": testSet,
-        "Easy": easySet,
-        "Hard": hardSet
+        "Easy"       : easySet,
+        "Medium"     : midiSet,
+        "Hard"       : hardSet,
+        "Competitive": compSet
     });
 })();
 
