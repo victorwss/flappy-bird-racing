@@ -6,6 +6,11 @@ const IMPULSO_MAXIMO = -1200;
 const RAIO_PASSARINHO = 20;
 const VELOCIDADE_TERMINAL = 4000;
 const DISTANCIA_PERNAS = 5;
+const TEMPO_MORTE = 8;
+const TEMPO_BALAO_MORREU = 3;
+const TEMPO_CONTAGEM = 5;
+const TEMPO_VOLTANDO = 2;
+const TEMPO_BALAO_VOLTEI = 5;
 
 class Passarinho extends GameObject {
     #x;
@@ -88,7 +93,7 @@ class Passarinho extends GameObject {
     }
 
     tick(deltaT) {
-        if (!this.vivo && this.#tempoMorte < 11) {
+        if (!this.vivo && this.#tempoMorte <= TEMPO_CONTAGEM) {
             this.#balao = new Balao(1, "" + Math.floor(this.#tempoMorte));
         }
         this.#balao.tick(deltaT);
@@ -113,7 +118,7 @@ class Passarinho extends GameObject {
             this.#tempoMorte -= deltaT / 1000;
             if (this.#tempoMorte <= 0) {
                 this.#tempoMorte = 0;
-                this.#balao = new Balao(5, this.lingua.voltei);
+                this.#balao = new Balao(TEMPO_BALAO_VOLTEI, this.lingua.voltei);
                 this.gotoSobre(this.#checkpoint);
             }
         }
@@ -170,8 +175,8 @@ class Passarinho extends GameObject {
         if (this.#quentura > 0) return;
         this.spec.morreu();
         this.#vivo = false;
-        this.#tempoMorte = 15;
-        this.#balao = new Balao(5, this.lingua.morte);
+        this.#tempoMorte = TEMPO_MORTE;
+        this.#balao = new Balao(TEMPO_BALAO_MORREU, this.lingua.morte);
     }
 
     passouDeFase() {
@@ -185,8 +190,8 @@ class Passarinho extends GameObject {
 
     #iridescente(spec, ctx) {
         if (this.#quentura && spec === this.spec) return radial(ctx, this.#quentura % 1, this.raio);
-        if (this.vivo || this.#tempoMorte >= 10) return null;
-        return radial(ctx, this.#tempoMorte / 10, this.raio * 3);
+        if (this.vivo || this.#tempoMorte >= TEMPO_VOLTANDO) return null;
+        return radial(ctx, this.#tempoMorte / TEMPO_MORTE, this.raio * 3);
     }
 
     desenhar(spec, ctx) {
